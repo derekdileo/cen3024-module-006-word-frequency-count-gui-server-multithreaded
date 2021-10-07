@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class TextAnalyzer {
 
 	// Declare filepath
-	private static final String filepath = "/Users/derekdileo/Documents/Software Development/Workspaces/Java-Programming-For-Beginners/cen3024-module-002-word-frequency-count/src/application/scrape.txt";
+	private static final String filepath = "/Users/derekdileo/Documents/Software Development/Workspaces/Java-Programming-For-Beginners/cen3024-module-006-word-frequency-count-gui/src/application/scrape.txt";
 
 	// ArrayList to store individual words pulled from text file
 	public static ArrayList<String> wordsList = new ArrayList<>();
@@ -46,6 +46,7 @@ public class TextAnalyzer {
 				// Poem occurs on site between these lines
 				if (lineCount >= 68 && lineCount <= 242) {
 
+					// Strip line of html tags
 					String nohtml = line.toString().toLowerCase().replaceAll("\\<.*?>", "");
 
 					// Split string, ignoring all but letters of alphabet and apostrophe (to allow contractions)
@@ -53,7 +54,7 @@ public class TextAnalyzer {
 
 					// Add all to ArrayList<String> wordsList
 					for (String word : words) {
-						// Do not allow white blank white space (frequency = 30 and near top of list) or "mdash"
+						// Do not allow white blank white space or "mdash"
 						if (word.toString() != "" && word.toString() != " " && !word.toString().contains("mdash")
 								&& !word.toString().contains("	")) {
 							wordsList.add(word.toString());
