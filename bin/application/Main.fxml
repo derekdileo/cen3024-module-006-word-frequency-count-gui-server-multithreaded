@@ -45,7 +45,7 @@
                   </Text>
                   <ImageView fx:id="image" fitHeight="130.0" fitWidth="174.0" layoutX="593.0" layoutY="8.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../resources/image.png" />
+                        <Image url="@../resources/img/image.png" />
                      </image>
                   </ImageView>
                </children>

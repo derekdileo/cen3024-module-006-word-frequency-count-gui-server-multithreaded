@@ -55,7 +55,7 @@ public class MainController implements Initializable {
 
 		// Copyright symbol for GUI footer
 		String s = Character.toString((char) copyrightSymbol);
-		Image imageFile = new Image("/resources/image.png");
+		Image imageFile = new Image("/resources/img/image.png");
 		copyrightLabel.setText(s);
 		
 		// Display Raven image
