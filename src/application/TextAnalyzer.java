@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class TextAnalyzer {
 
 	// Declare filepath and file to be written
-	protected static final String filepath = "/Users/derekdileo/Documents/Software Development/Workspaces/Java-Programming-For-Beginners/cen3024-module-006-word-frequency-count-gui/src/application/scrape.txt";
+	protected static final String filepath = "/Users/derekdileo/Documents/Software Development/Workspaces/Java-Programming-For-Beginners/cen3024-module-006-word-frequency-count-gui/src/resources/doc/scrape.txt";
 	protected static File file;
 	
 	// HashMap to store words and their occurances parsed from textfile

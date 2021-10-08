@@ -14,7 +14,7 @@ public class WebScrapeToFile {
 
 	// Initialize variables (website used in Main)
 	private static final int DEFAULT_BUFFER_SIZE = 4096;
-	private static final String filepath = "/Users/derekdileo/Documents/Software Development/Workspaces/Java-Programming-For-Beginners/cen3024-module-006-word-frequency-count-gui/src/application/scrape.txt";
+	private static final String filepath = "/Users/derekdileo/Documents/Software Development/Workspaces/Java-Programming-For-Beginners/cen3024-module-006-word-frequency-count-gui/src/resources/doc/scrape.txt";
 	protected static final String website = "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
 	
 	/**
