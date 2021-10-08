@@ -57,7 +57,7 @@
       </VBox>
    </top>
    <bottom>
-      <HBox alignment="CENTER">
+      <HBox alignment="CENTER" prefWidth="767.0">
          <children>
             <Hyperlink fx:id="hyperlink" onAction="#handleHyperlink" style="-fx-border-color: transparent;" text="Source">
                <padding>
@@ -67,7 +67,7 @@
                   <Insets top="8.0" />
                </HBox.margin>
             </Hyperlink>
-            <Label text="Copyright 2021 TextAnalyzer">
+            <Label prefHeight="49.0" prefWidth="227.0" text="Copyright 2021 TextAnalyzer">
                <padding>
                   <Insets bottom="8.0" left="10.0" right="3.0" top="8.0" />
                </padding>
@@ -79,7 +79,7 @@
                   </Label>
                </graphic>
                <HBox.margin>
-                  <Insets right="300.0" />
+                  <Insets right="275.0" top="8.0" />
                </HBox.margin>
             </Label>
             <Button fx:id="showHideButton" mnemonicParsing="false" onAction="#handleShowHideButton" text="Show / Hide Text">
