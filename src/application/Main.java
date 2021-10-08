@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	
+	
+	
 	public static void main(String[] args) {
 		try {
 			WebScrapeToFile.createFile();
@@ -105,7 +107,11 @@ public class Main extends Application {
        Boolean answer = ConfirmBox.display("", "Are you sure you want to quit?");
        if (answer) {
            // Run any necessary code before window closes:
-           // Save / transfer files, etc...
+
+    	   // delete scrape.txt if it exists
+    	   if(TextAnalyzer.file.exists()) {
+    		   TextAnalyzer.file.delete();
+    	   }
            System.out.println("Window Closed!");
            window.close();
        }

@@ -17,7 +17,6 @@ public class WebScrapeToFile {
 	public static final String filepath = "/Users/derekdileo/Documents/Software Development/Workspaces/Java-Programming-For-Beginners/cen3024-module-006-word-frequency-count-gui/src/application/scrape.txt";
 	public static final String website = "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
 	
-	
     public static void createFile() throws IOException, URISyntaxException {
 
     	// Declare URI from given URL
