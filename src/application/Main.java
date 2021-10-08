@@ -9,11 +9,16 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-
+/** Application scrapes website to a file and prints a 
+ * list of top 10 word occurrences to a JavaFX GUI.
+ * @author derekdileo */
 public class Main extends Application {
 	
+	/** Main method calls WebScrapeToFile and launch() to start JavaFX GUI.
+	 * @param args mandatory parameters for command line method call */
 	public static void main(String[] args) {
 		
+		// Scrape text from website and write to text file
 		try {
 			WebScrapeToFile.createFile();
 		} catch (IOException e) {
@@ -29,13 +34,14 @@ public class Main extends Application {
 	}
 	
 	// Declare stage (window) outside of start() method
-	//to make accessible to closeProgram() method
+	// so it is accessible to closeProgram() method
 	static Stage window;
 	
+	/** start() launches the GUI */
 	@Override
 	public void start(Stage primaryStage) {
 		
-		// Rename stage to window for simplicity
+		// Rename stage to window for sanity
 		window = primaryStage;
 		
 		// Set stage title
@@ -44,11 +50,10 @@ public class Main extends Application {
 		// Handle close button request. 
 		// Launch ConfirmBox to confirm if user wishes to quit
 		window.setOnCloseRequest(e -> {
-			// Consume the event to allow ConfirmBox to do its job
+			// Consume the event to allow closeProgram() to do its job
 			e.consume();
 			closeProgram();
 		});
-		
 		
 		try {
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Main.fxml"));
@@ -62,7 +67,7 @@ public class Main extends Application {
 	}
 	
 	/** Method uses ConfirmBox class to confirm if user wants to quit
-    */
+	 *  and if true, deletes scrape.txt (if exists). */
 	protected static void closeProgram() {
        // Ask if user wants to exit
        Boolean answer = ConfirmBox.display("", "Are you sure you want to quit?");
@@ -77,6 +82,5 @@ public class Main extends Application {
            window.close();
        }
 	}
-	
 
 }
