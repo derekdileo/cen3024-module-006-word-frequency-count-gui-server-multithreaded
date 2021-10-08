@@ -5,6 +5,11 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * A Class to analyze text from a local text file, strip html tags, 
+ * and generate a HashMap<String, Integer> with key=word, value=occurrences 
+ * (requires knowledge of line numbers to be scanned). 
+ * @author derekdileo */
 public class TextAnalyzer {
 
 	// Declare filepath and file to be written
@@ -17,21 +22,24 @@ public class TextAnalyzer {
 	// Scanner for text file input
 	static Scanner sc;
 
-	// Method to parse text file into ArrayList<String> using File and Scanner
+	/**
+	 * Method to parse text file into HashMap<String, Integer> 
+	 * with key=word, value=occurrences using File and Scanner. 
+	 * @return HashMap containing words and their occurrences in the File
+	 * @author Derek DiLeo */
 	public static HashMap<String, Integer> formatFileToMap() {
 
 		try {
-
-			// Create file object from file at filepath location
+			// Create file object from text file at filepath
 			file = new File(filepath);
 
-			// Initialize scanner for text file input
+			// Initialize scanner to read file
 			sc = new Scanner(file);
 
-			// Initialize String array to hold strings from line.split()
+			// Array to hold strings from line.split()
 			String[] words = null;
 
-			// Counter to track where poem starts and finishes on site
+			// Track lines to locate start and finish of poem
 			int lineCount = 0;
 
 			// Loop until end of poem
@@ -43,10 +51,10 @@ public class TextAnalyzer {
 				// Increment line counter
 				lineCount++;
 
-				// Poem occurs on site between these lines
+				// Poem occurs in text file between these lines
 				if (lineCount >= 68 && lineCount <= 242) {
 
-					// Strip line of html tags
+					// Strip line of html tags using RegEx
 					String nohtml = line.toString().toLowerCase().replaceAll("\\<.*?>", "");
 
 					// Split string, ignoring all but letters of alphabet and apostrophe (to allow contractions)
@@ -57,11 +65,12 @@ public class TextAnalyzer {
 						// Do not allow white blank white space or "mdash"
 						if (word.toString() != "" && word.toString() != " " && !word.toString().contains("mdash")
 								&& !word.toString().contains("	")) {
-							if (wordFrequency.containsKey(word)) {
+							
+							if (wordFrequency.containsKey(word)) { // If word already in HashMap
 								// Get the current word frequency count
 								int n = wordFrequency.get(word);
 
-								// Increment and replace count
+								// Increment, then replace count
 								wordFrequency.put(word, ++n);
 							}
 
