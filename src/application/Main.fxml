@@ -9,9 +9,9 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <top>
-      <VBox prefHeight="72.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="179.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <MenuBar fx:id="menuBar" prefHeight="19.0" prefWidth="600.0">
               <menus>
@@ -27,13 +27,28 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <AnchorPane prefHeight="48.0" prefWidth="600.0">
+            <AnchorPane prefHeight="158.0" prefWidth="800.0">
                <children>
-                  <ImageView fx:id="image" fitHeight="155.0" fitWidth="100.0" layoutX="486.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="image" fitHeight="130.0" fitWidth="174.0" layoutX="612.0" layoutY="18.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/image.png" />
                      </image>
                   </ImageView>
+                  <AnchorPane layoutX="312.0" layoutY="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The Raven">
+                           <font>
+                              <Font name="Apple SD Gothic Neo Heavy" size="36.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="80.0" layoutY="49.400001525878906" strokeType="OUTSIDE" strokeWidth="0.0" text="by" />
+                        <Text layoutX="17.0" layoutY="79.4000015258789" strokeType="OUTSIDE" strokeWidth="0.0" text="Edgar Allen Poe">
+                           <font>
+                              <Font name="Apple SD Gothic Neo Bold" size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </children>
@@ -45,24 +60,25 @@
    <bottom>
       <HBox prefHeight="33.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Hyperlink fx:id="hyperlink" onAction="#handleHyperlink" text="Hyperlink">
+            <Hyperlink fx:id="hyperlink" onAction="#handleHyperlink" text="Source">
                <padding>
                   <Insets bottom="8.0" left="8.0" right="50.0" top="8.0" />
                </padding>
             </Hyperlink>
-            <Label text="Label">
+            <Label text="Copyright 2021 TextAnalyzer">
                <padding>
-                  <Insets bottom="8.0" left="10.0" right="8.0" top="8.0" />
+                  <Insets bottom="8.0" left="10.0" right="375.0" top="8.0" />
                </padding>
             </Label>
+            <Button fx:id="topTenButton" mnemonicParsing="false" onAction="#handleTopTenButton" text="Show / Hide Text">
+               <padding>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </padding>
+            </Button>
          </children>
       </HBox>
    </bottom>
    <center>
-      <TextArea fx:id="textArea" prefHeight="282.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-         </padding>
-      </TextArea>
+      <Label fx:id="labelText" styleClass="labelText" text="Label" wrapText="true" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
