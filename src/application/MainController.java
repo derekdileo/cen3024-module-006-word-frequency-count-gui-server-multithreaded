@@ -26,6 +26,7 @@ public class MainController implements Initializable {
 	@FXML Button allButton;
 	@FXML Hyperlink hyperlink;
 	@FXML ImageView image;
+	@FXML Label copyrightLabel;
 	@FXML Label labelText;
 	@FXML MenuBar menuBar;
 	@FXML MenuItem fileCloseButton;
@@ -39,13 +40,17 @@ public class MainController implements Initializable {
 	private ArrayList<Word> wordsArrayListWords;
 	public boolean displayText = false;
 	private StringBuilder sb;
+	private int copyrightSymbolCodePoint = 169;
 
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("Loading user data!");
 		
+		String s = Character.toString((char) copyrightSymbolCodePoint);
 		Image imageFile = new Image("/resources/image.png");
+		copyrightLabel.setText(s);
+		
 		
 		ImageView iv1 = new ImageView();
 		iv1.setImage(imageFile);
