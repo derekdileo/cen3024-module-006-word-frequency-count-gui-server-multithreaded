@@ -7,17 +7,24 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-/* A Class that will scrape text from given URI and write 
- * and write resultant text to a file.
- * */
-
+/**
+ * A Class that will scrape text from given URI and write to a file.
+ * @author derekdileo */
 public class WebScrapeToFile {
 
-	public static final int DEFAULT_BUFFER_SIZE = 4096;
-	public static final String filepath = "/Users/derekdileo/Documents/Software Development/Workspaces/Java-Programming-For-Beginners/cen3024-module-006-word-frequency-count-gui/src/application/scrape.txt";
-	public static final String website = "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
+	// Initialize variables (website used in Main)
+	private static final int DEFAULT_BUFFER_SIZE = 4096;
+	private static final String filepath = "/Users/derekdileo/Documents/Software Development/Workspaces/Java-Programming-For-Beginners/cen3024-module-006-word-frequency-count-gui/src/application/scrape.txt";
+	protected static final String website = "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
 	
-    public static void createFile() throws IOException, URISyntaxException {
+	/**
+	 * A method for scrubbing text from a website by opening an InputStream with a given URI, 
+	 * creates a File at a given filepath and calls copyInputStreamToFile write to that file. 
+	 * 
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @author Derek DiLeo */
+    protected static void createFile() throws IOException, URISyntaxException {
 
     	// Declare URI from given URL
     	URI u = new URI(website);
@@ -33,6 +40,12 @@ public class WebScrapeToFile {
         }
     }
     
+    /**
+     * Method called by createFile() to use a FileOutputStream to write text to the generated file. 
+     * @param inputStream
+     * @param file
+     * @throws IOException
+     * @author Derek DiLeo */
     private static void copyInputStreamToFile(InputStream inputStream, File file)
             throws IOException {
     	
