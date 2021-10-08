@@ -12,13 +12,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 
 public class MainController implements Initializable {
 	
-	@FXML TextArea textArea;
+	@FXML ImageView image;
 	@FXML MenuBar menuBar;
 	@FXML MenuItem fileCloseButton;
 	@FXML MenuItem helpAboutButton;
+	@FXML TextArea textArea;
 
 	// Local Lists and Maps to hold return values from Class methods
 	private static ArrayList<String> wordsArrayListStrings;
