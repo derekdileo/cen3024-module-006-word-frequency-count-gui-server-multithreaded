@@ -106,7 +106,6 @@ public class MainController implements Initializable {
 		
 		// Push top 10 results to GUI
 		labelText.setText(sbTen.toString());
-		labelText.setStyle("-fx-font-alignment: center");
 		
 		// Build a string of all results to push to AllResults.fxml GUI
 		sbAll = new StringBuilder();
