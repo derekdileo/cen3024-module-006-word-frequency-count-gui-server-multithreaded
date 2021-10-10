@@ -1,6 +1,7 @@
 package application;
 
 import java.awt.Desktop;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
@@ -10,7 +11,11 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -18,6 +23,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 /**
  * Controller class for Main.fxml which calls 
@@ -40,8 +46,9 @@ public class MainController implements Initializable {
 	private ArrayList<Word> wordsArrayListWords;
 	
 	// Varibles used to show / hide text on GUI
-	private boolean displayText = false; 
-	private StringBuilder sb;
+	//private boolean displayTopTen = false; 
+	private StringBuilder sbTen;
+	protected static StringBuilder sbAll;
 	
 	// int value of copyright symbol for GUI footer  
 	private int copyrightSymbol = 169;
@@ -55,10 +62,10 @@ public class MainController implements Initializable {
 
 		// Copyright symbol for GUI footer
 		String s = Character.toString((char) copyrightSymbol);
-		Image imageFile = new Image("/resources/img/image.png");
 		copyrightLabel.setText(s);
 		
 		// Display Raven image
+		Image imageFile = new Image("/resources/img/image.png");
 		ImageView iv1 = new ImageView();
 		iv1.setImage(imageFile);
 		
@@ -89,9 +96,29 @@ public class MainController implements Initializable {
 	 * @author Derek DiLeo */
 	private void processText() {
 
-		// Print after sort
-		System.out.println("\nSorted:");
+		// Build a string of top 10 results to push to Main.fxml GUI
+		sbTen = new StringBuilder();
+		sbTen.append("Top Ten Results\n\n");
 		
+		for (int index = 0; index < 10; index++) {
+			sbTen.append(wordsArrayListWords.get(index).toString(index) + "\n");
+		}
+		
+		// Push top 10 results to GUI
+		labelText.setText(sbTen.toString());
+		labelText.setStyle("-fx-font-alignment: center");
+		
+		// Boolean variable used as safety for handleShowHideButton() 
+		//displayTopTen = true;
+		
+		
+		// Build a string of all results to push to AllResults.fxml GUI
+		sbAll = new StringBuilder();
+		sbAll.append("All Results\n\n");
+		
+		// Print all results to console and append all results to sbAll
+		System.out.println("\nSorted:");
+
 		for (Word word : wordsArrayListWords) {
 			
 			// Get value of index location to pass into Word.toString(int index)
@@ -100,21 +127,11 @@ public class MainController implements Initializable {
 			// Print each Word in wordsArrayListWords
 			System.out.println(wordsArrayListWords.get(index).toString(index));
 			
+			// Append word to String Builder to be pushed to GUI (via AllResults.fxml)
+			sbAll.append(wordsArrayListWords.get(index).toString(index) + "\n");
+			
 		}
 
-		// Build a string of top 10 results to push to GUI
-		sb = new StringBuilder();
-		
-		for (int index = 0; index < 10; index++) {
-			sb.append(wordsArrayListWords.get(index).toString(index) + "\n");
-		}
-		
-		// Push top 10 results to GUI
-		labelText.setText(sb.toString());
-		labelText.setStyle("-fx-font-alignment: center");
-		
-		// Boolean variable used as safety for handleShowHideButton() 
-		displayText = true;
 	}
 	
 	/**
@@ -155,12 +172,19 @@ public class MainController implements Initializable {
 	 * Method to show / hide text printed to GUI by processText().
 	 * @param event when user clicks "Show / Hide Text" button. */
 	@FXML public void handleShowHideButton(ActionEvent event) {
-		if (displayText) {
-			labelText.setText("");
-			displayText = false;
-		} else {
-			labelText.setText(sb.toString());
-			displayText = true;
+		
+		try {
+			Parent allResultsViewParent = FXMLLoader.load(getClass().getResource("AllResults.fxml"));
+			Scene allResultsViewScene = new Scene(allResultsViewParent);
+			
+			// Get the Stage information
+			Stage window = (Stage)(((Node) event.getSource()).getScene().getWindow());
+			window.setScene(allResultsViewScene);
+			window.show();
+		} catch (IOException e) {
+			System.out.println("Error switching to AllResults.fxml: IOException: " + e);
+			e.printStackTrace();
 		}
+		
 	}
 }

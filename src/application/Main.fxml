@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -57,7 +57,7 @@
       </VBox>
    </top>
    <bottom>
-      <HBox alignment="CENTER" prefWidth="767.0">
+      <HBox alignment="CENTER">
          <children>
             <Hyperlink fx:id="hyperlink" onAction="#handleHyperlink" style="-fx-border-color: transparent;" text="Source">
                <padding>
@@ -82,7 +82,7 @@
                   <Insets right="275.0" top="8.0" />
                </HBox.margin>
             </Label>
-            <Button fx:id="showHideButton" mnemonicParsing="false" onAction="#handleShowHideButton" text="Show / Hide Text">
+            <Button fx:id="showHideButton" mnemonicParsing="false" onAction="#handleShowHideButton" text="Show All Results">
                <padding>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </padding>

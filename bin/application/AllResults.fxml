@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AllResultsController">
    <top>
-      <VBox BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <MenuBar fx:id="menuBar">
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem fx:id="fileCloseButton" mnemonicParsing="false" onAction="#handleFileClose" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem fx:id="helpAboutButton" mnemonicParsing="false" onAction="#handleHelpAbout" text="About" />
-                  </items>
-                </Menu>
-              </menus>
+               <menus>
+                  <Menu mnemonicParsing="false" text="File">
+                     <items>
+                        <MenuItem fx:id="fileCloseButton" mnemonicParsing="false" onAction="#handleFileClose" text="Close" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem fx:id="helpAboutButton" mnemonicParsing="false" onAction="#handleHelpAbout" text="About" />
+                     </items>
+                  </Menu>
+               </menus>
             </MenuBar>
-            <AnchorPane layoutX="312.0" layoutY="50.0" VBox.vgrow="ALWAYS">
+            <AnchorPane>
                <children>
                   <Text layoutX="303.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Raven">
                      <font>
@@ -37,7 +36,8 @@
                   <Text layoutX="383.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="by">
                      <font>
                         <Font name="AppleGothic Regular" size="13.0" />
-                     </font></Text>
+                     </font>
+                  </Text>
                   <Text layoutX="320.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edgar Allen Poe">
                      <font>
                         <Font name="Apple SD Gothic Neo Bold" size="20.0" />
@@ -51,26 +51,20 @@
                </children>
             </AnchorPane>
          </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
       </VBox>
    </top>
    <bottom>
-      <HBox alignment="CENTER">
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Hyperlink fx:id="hyperlink" onAction="#handleHyperlink" style="-fx-border-color: transparent;" text="Source">
-               <padding>
-                  <Insets bottom="8.0" left="8.0" right="50.0" top="8.0" />
-               </padding>
+            <Hyperlink fx:id="handleHyperlink" onAction="#handleHyperlink" prefHeight="21.0" prefWidth="104.0" style="-fx-border-color: transparent;" text="Source">
                <HBox.margin>
                   <Insets top="8.0" />
                </HBox.margin>
-            </Hyperlink>
-            <Label prefHeight="49.0" prefWidth="227.0" text="Copyright 2021 TextAnalyzer">
                <padding>
-                  <Insets bottom="8.0" left="10.0" right="3.0" top="8.0" />
+                  <Insets bottom="8.0" left="8.0" right="50.0" top="8.0" />
                </padding>
+            </Hyperlink>
+            <Label prefHeight="49.0" prefWidth="233.0" text="Copyright 2021 TextAnalyzer">
                <graphic>
                   <Label fx:id="copyrightLabel">
                      <padding>
@@ -78,11 +72,14 @@
                      </padding>
                   </Label>
                </graphic>
+               <padding>
+                  <Insets bottom="8.0" left="10.0" right="3.0" top="8.0" />
+               </padding>
                <HBox.margin>
                   <Insets right="275.0" top="8.0" />
                </HBox.margin>
             </Label>
-            <Button fx:id="showHideButton" mnemonicParsing="false" onAction="#handleShowHideButton" text="Show All Results">
+            <Button fx:id="showHideButton" mnemonicParsing="false" onAction="#handleShowHideButton" text="Show Top Ten Results">
                <padding>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </padding>
@@ -94,6 +91,10 @@
       </HBox>
    </bottom>
    <center>
-      <Label fx:id="labelText" styleClass="labelText" wrapText="true" BorderPane.alignment="CENTER" />
+      <ScrollPane fx:id="scrollPaneAllResults" style="-fx-border-color: transparent;" BorderPane.alignment="CENTER">
+         <content>
+            <TextArea fx:id="textAreaAllResults" editable="false" prefHeight="338.0" prefWidth="793.0" style="-fx-background-color: #f4f4f4; -fx-border-color: transparent; -fx-padding: 0,0,50;" wrapText="true" />
+         </content>
+      </ScrollPane>
    </center>
 </BorderPane>
