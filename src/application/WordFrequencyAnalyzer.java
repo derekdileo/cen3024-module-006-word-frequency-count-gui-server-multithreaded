@@ -6,16 +6,16 @@ import java.util.Map;
 
 /**
  * A Class which instantiates a Word object with each entry of HashMap (K/V = word/frequency) 
- * and adds to an ArrayList<Word> to enable sorting and printing (Word implements Comparable<Word>).   
+ * and adds to an ArrayList (of Word) to enable sorting and printing (Word implements Comparable<Word>).   
  * @author Derek DiLeo */
 public class WordFrequencyAnalyzer {
 	
 	/**
 	 * Method instantiates a Word object with each entry of HashMap (K/V = word/frequency) 
-     * then adds all to (and returns) an ArrayList<Word>.  
-	 * @param hm is a HashMap<String, Integer> with Key/Value = word/frequency 
-	 * @return ArrayList<Word> which enables the sorting and printing of each 
-	 * entry(Word implements Comparable<Word>). */
+     * then adds all to (and returns) an ArrayList(of Word).  
+	 * @param hm is a HashMap(of String, Integer) with Key/Value = word/frequency 
+	 * @return ArrayList(of Word) which enables the sorting and printing of each 
+	 * entry(Word implements Comparable(for Word)). */
 	static ArrayList<Word> processHashMap(HashMap<String, Integer> hm) {
 
 		// ArrayList to hold Word objects for later comparison

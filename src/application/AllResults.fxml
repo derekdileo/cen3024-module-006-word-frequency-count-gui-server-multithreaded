@@ -10,7 +10,7 @@
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AllResultsController">
    <top>
-      <VBox prefHeight="163.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <VBox prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <MenuBar fx:id="menuBar">
                <menus>
@@ -54,7 +54,7 @@
       </VBox>
    </top>
    <bottom>
-      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" style="-fx-border-color: transparent;" BorderPane.alignment="CENTER">
          <children>
             <Hyperlink fx:id="handleHyperlink" onAction="#handleHyperlink" prefHeight="21.0" prefWidth="104.0" style="-fx-border-color: transparent;" text="Source">
                <HBox.margin>

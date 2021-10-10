@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 /**
  * A Class to analyze text from a local text file, strip html tags, 
- * and generate a HashMap<String, Integer> with key=word, value=occurrences 
+ * and generate a HashMap (of String, Integer) with key=word, value=occurrences 
  * (requires knowledge of line numbers to be scanned). 
  * @author derekdileo */
 public class TextAnalyzer {
@@ -23,7 +23,7 @@ public class TextAnalyzer {
 	static Scanner sc;
 
 	/**
-	 * Method to parse text file into HashMap<String, Integer> 
+	 * Method to parse text file into HashMap(of String, Integer) 
 	 * with key=word, value=occurrences using File and Scanner. 
 	 * @return HashMap containing words and their occurrences in the File
 	 * @author Derek DiLeo */

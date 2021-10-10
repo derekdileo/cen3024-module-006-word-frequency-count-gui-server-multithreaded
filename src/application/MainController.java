@@ -130,8 +130,8 @@ public class MainController implements Initializable {
 	}
 	
 	/**
-	 * Method to call Main.closeProgram() when File > Close clicked.
-	 * @param event when user clicks File > Close */
+	 * Method to call Main.closeProgram() when File, Close clicked.
+	 * @param event when user clicks File, Close */
 	@FXML public void handleFileClose(ActionEvent event) {
 		Main.closeProgram();
 	}
@@ -139,7 +139,7 @@ public class MainController implements Initializable {
 
 	/**
 	 * Method to launch github repo page on default browser (send to readme file, once typed).
-	 * @param event when user clicks Help > About */
+	 * @param event when user clicks Help, About */
 	@FXML public void handleHelpAbout(ActionEvent event) {
 		try {
 			  Desktop desktop = java.awt.Desktop.getDesktop();

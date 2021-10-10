@@ -16,7 +16,6 @@ public class AlertBox {
     /** display() method displays the ConfirmBox to the user
      * @param title title of the pop-up window to be displayed
      * @param message message displayed in the pop-up window via Label class
-     * @return boolean value (yes or no)
      * @author Derek DiLeo
      */
     public static void display(String title, String message) {
