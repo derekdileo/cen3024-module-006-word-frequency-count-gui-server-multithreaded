@@ -108,10 +108,6 @@ public class MainController implements Initializable {
 		labelText.setText(sbTen.toString());
 		labelText.setStyle("-fx-font-alignment: center");
 		
-		// Boolean variable used as safety for handleShowHideButton() 
-		//displayTopTen = true;
-		
-		
 		// Build a string of all results to push to AllResults.fxml GUI
 		sbAll = new StringBuilder();
 		sbAll.append("All Results\n\n");
@@ -169,8 +165,8 @@ public class MainController implements Initializable {
 	}
 
 	/**
-	 * Method to show / hide text printed to GUI by processText().
-	 * @param event when user clicks "Show / Hide Text" button. */
+	 * Method to switch the Scene to AllResults.fxml
+	 * @param event when user clicks "Show All Results" button. */
 	@FXML public void handleShowHideButton(ActionEvent event) {
 		
 		try {

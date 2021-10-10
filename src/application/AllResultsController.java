@@ -53,11 +53,6 @@ public class AllResultsController implements Initializable  {
 		String s = Character.toString((char) copyrightSymbol);
 		copyrightLabel.setText(s);
 		
-		//Display Raven image
-//		Image imageFile = new Image("/resources/img/image.png");
-//		ImageView iv1 = new ImageView();
-//		iv1.setImage(imageFile);
-		
 		// Push All Results to GUI
 		textAreaAllResults.setText(MainController.sbAll.toString());
 	}
