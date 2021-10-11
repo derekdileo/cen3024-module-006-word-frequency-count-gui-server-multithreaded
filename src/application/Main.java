@@ -11,9 +11,25 @@ import javafx.stage.Stage;
  * @author derekdileo */
 public class Main extends Application {
 	
+	//Variables to copy from when running for THIS site
+//	private String website =  "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
+//	private String sourceHead = "<h1>The Raven</h1>";
+//	private String sourceEnd = "<!--end chapter-->";
+
+	// Empty variables
+	protected static String userWebsite = null;
+	protected static String sourceHead = null;
+	protected static String sourceEnd = null;
+	
+	private static String sitePrompt = "Please enter a website to evaluate";
+	private static String startPrompt = "Please paste some text from the first line of text to be evaluated.";
+	private static String endPrompt = "Please paste some text from the last line of text to be evaluated.";
+	
+	
 	/** Main method calls WebScrapeToFile and launch() to start JavaFX GUI.
 	 * @param args mandatory parameters for command line method call */
 	public static void main(String[] args) {
+		
 		// Launch JavaFX GUI 
 		launch();
 	}
@@ -25,6 +41,11 @@ public class Main extends Application {
 	/** start() launches the GUI */
 	@Override
 	public void start(Stage primaryStage) {
+		
+		userWebsite = QuestionBox.display("Website to Process?", sitePrompt);
+		sourceHead = QuestionBox.display("Start of Processing?", startPrompt);
+		sourceEnd = QuestionBox.display("End of Processing?", endPrompt);
+		
 		
 		// Rename stage to window for sanity
 		window = primaryStage;
