@@ -60,7 +60,7 @@ public class TextAnalyzer {
 					// Split string, ignoring all but letters of alphabet and apostrophe (to allow contractions)
 					words = nohtml.split("[^a-zA-Z’]+");
 
-					// Add all to HashMap<String, Integer> (word, frequency of occurance) 
+					// Add all to HashMap<String, Integer> (word, frequency of occurence) 
 					for (String word : words) {
 						// Do not allow white blank white space or "mdash"
 						if (word.toString() != "" && word.toString() != " " && !word.toString().contains("mdash")
