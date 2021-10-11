@@ -3,7 +3,6 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -128,34 +127,34 @@ public class WebScrape {
 	
 	
 	// To test the Methods as they are written
-	public static void main(String[] args) {
-		
-		// Testing parseSiteByLineNumbers() 
-		String website = "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
-//		String[] wordsArray = parseSiteByLineNumbers(website, 77, 243);
-//		System.out.println("parseSiteByLineNumbers() Results: \n");
-//		System.out.println(Arrays.asList(wordsArray));
-		
-		
-		
-		// Testing parseSite() 
-		String sourceHead = "<h1>The Raven</h1>";
-		String sourceEnd = "<!--end chapter-->";
-		HashMap<String, Integer> wordMap = parseSite(website, sourceHead, sourceEnd);
-		
-		wordsArrayList = WordFrequencyAnalyzer.processHashMap(wordMap);
-		
-		Collections.sort(wordsArrayList);
-		Collections.reverse(wordsArrayList);
-		
-		for (Word word : wordsArrayList) {
-			int index = wordsArrayList.indexOf(word);
-			
-			//Print each Word in wordsArrayListWords
-			System.out.println(wordsArrayList.get(index).toString(index));
-			
-		}
-	}
+//	public static void main(String[] args) {
+//		
+//		// Testing parseSiteByLineNumbers() 
+//		String website = "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
+////		String[] wordsArray = parseSiteByLineNumbers(website, 77, 243);
+////		System.out.println("parseSiteByLineNumbers() Results: \n");
+////		System.out.println(Arrays.asList(wordsArray));
+//		
+//		
+//		
+//		// Testing parseSite() 
+//		String sourceHead = "<h1>The Raven</h1>";
+//		String sourceEnd = "<!--end chapter-->";
+//		HashMap<String, Integer> wordMap = parseSite(website, sourceHead, sourceEnd);
+//		
+//		wordsArrayList = WordFrequencyAnalyzer.processHashMap(wordMap);
+//		
+//		Collections.sort(wordsArrayList);
+//		Collections.reverse(wordsArrayList);
+//		
+//		for (Word word : wordsArrayList) {
+//			int index = wordsArrayList.indexOf(word);
+//			
+//			//Print each Word in wordsArrayListWords
+//			System.out.println(wordsArrayList.get(index).toString(index));
+//			
+//		}
+//	}
 }
 
 
