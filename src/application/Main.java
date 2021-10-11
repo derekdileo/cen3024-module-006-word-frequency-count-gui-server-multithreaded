@@ -1,8 +1,5 @@
 package application;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,18 +14,6 @@ public class Main extends Application {
 	/** Main method calls WebScrapeToFile and launch() to start JavaFX GUI.
 	 * @param args mandatory parameters for command line method call */
 	public static void main(String[] args) {
-		
-		// Scrape text from website and write to text file
-		try {
-			WebScrapeToFile.createFile();
-		} catch (IOException e) {
-			System.out.println("IOException at WebScrapeToFile.createFile()!");
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			System.out.println("URISyntaxException at WebScrapeToFile.createFile()!");// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		// Launch JavaFX GUI 
 		launch();
 	}
@@ -73,11 +58,6 @@ public class Main extends Application {
        Boolean answer = ConfirmBox.display("", "Are you sure you want to quit?");
        if (answer) {
            // Run any necessary code before window closes:
-
-    	   // delete scrape.txt if it exists
-    	   if(TextAnalyzer.file.exists()) {
-    		   TextAnalyzer.file.delete();
-    	   }
            System.out.println("Window Closed!");
            window.close();
        }
