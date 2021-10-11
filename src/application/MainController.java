@@ -50,6 +50,11 @@ public class MainController implements Initializable {
 	private StringBuilder sbTen;
 	protected static StringBuilder sbAll;
 	
+	private String website =  "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
+	private String sourceHead = "<h1>The Raven</h1>";
+	private String sourceEnd = "<!--end chapter-->";
+	
+	
 	// int value of copyright symbol for GUI footer  
 	private int copyrightSymbol = 169;
 
