@@ -13,11 +13,13 @@ import application.Word;
 class WordTest {
 
 	private static Word wordTest;
+	//private static Word wordTest2;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		System.out.println("setUpBeforeClass()... (runs once)");
 		wordTest = new Word("testing", 5);
+		//wordTest2 = new Word("testing", 5);
 	}
 
 	@AfterAll
@@ -36,7 +38,7 @@ class WordTest {
 	}
 
 	@Test
-	void toStringTest() {
+	void toString_Test() {
 		int index = 0;
 		String word = wordTest.getKey();
 		int frequency = wordTest.getValue();
@@ -49,10 +51,19 @@ class WordTest {
 		
 		assertEquals(strToString, strCode);
 	}
-
-	@Test
-	void test() {
-		//fail("Not yet implemented");
-	}
+//
+//	@Test
+//	void compareTo_Test(Word wordTest2) {
+//		int result = wordTest.compareTo(wordTest2);		
+//		System.out.println("Result: " + result);
+//		assertEquals(0, result, 0);
+//		//fail("Not yet implemented");
+//	}
+	
+	// An example with a fail and expected Exception
+//	@Test(expected IllegalArgumentException.class)
+//	void test() {
+//		fail("Not yet implemented");
+//	}
 	
 }
