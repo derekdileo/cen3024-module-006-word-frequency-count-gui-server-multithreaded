@@ -18,60 +18,49 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
- * Controller class for Main.fxml which calls 
+ * Controller class for AllResults.fxml which calls 
  * initialize() prior to launching GUI. 
  * @author Derek DiLeo */
-public class MainController implements Initializable {
-	
+public class AllResultsDefaultController implements Initializable  {
+
 	// Declare local FXML Tags
-	@FXML Button showHideButton;
-	@FXML Hyperlink hyperlink;
-	@FXML ImageView image;
-	@FXML ImageView image2;
 	@FXML Label copyrightLabel;
-	@FXML Label labelText;
-	@FXML MenuBar menuBar;
 	@FXML MenuItem fileCloseButton;
+	@FXML Hyperlink handleHyperlink;
 	@FXML MenuItem helpAboutButton;
+	@FXML ImageView image2;
+	@FXML MenuBar menuBar;
+	@FXML Button showHideButton;
+	@FXML ScrollPane scrollPaneAllResults;
+	@FXML TextArea textAreaAllResults;
 	
 	// int value of copyright symbol for GUI footer  
 	private int copyrightSymbol = 169;
 	
 	// URL of GitHub repo
 	private String aboutSite = "https://github.com/derekdileo/cen3024-module-006-word-frequency-count-gui";
-
+	
 	/**
-	 * Method runs prior to GUI being displayed and handles processing 
-	 * of text file created by WebScrapeToFile.createFile(). 
+	 * Method runs prior to GUI being displayed and calls 'sbAll' 
+	 * String built in MainController to be pushed to GUI 
 	 * @author Derek DiLeo */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
 		// Copyright symbol for GUI footer
 		String s = Character.toString((char) copyrightSymbol);
 		copyrightLabel.setText(s);
 		
-		// Display Raven image (if default website chosen)
-		if(Main.defaultSite) {
-			Image imageFile = new Image("/resources/img/image.png");
-			ImageView image = new ImageView();
-			image.setImage(imageFile);						
-		} else {
-			Image imageFile = new Image("/resources/img/image2.png");
-			ImageView image2 = new ImageView();
-			image2.setImage(imageFile);						
-		
-		}
-		
-		// Display top ten results
-		labelText.setText(Main.sbTenString);
-		
+		// Push All Results to GUI
+		textAreaAllResults.setText(Main.sbAllString);
 	}
+	
+	
 	
 	/**
 	 * Method to call Main.closeProgram() when File, Close clicked.
@@ -79,6 +68,7 @@ public class MainController implements Initializable {
 	@FXML public void handleFileClose(ActionEvent event) {
 		Main.closeProgram();
 	}
+
 
 	/**
 	 * Method to launch github repo page on default browser (send to readme file, once typed).
@@ -107,22 +97,22 @@ public class MainController implements Initializable {
 	}
 
 	/**
-	 * Method to switch the Scene to AllResults.fxml
-	 * @param event when user clicks "Show All Results" button. */
+	 * When this method is called, it will change the Scene to Main.fxml
+	 *	 * @param event when user clicks "Show Top Ten Results" button. */
 	@FXML public void handleShowHideButton(ActionEvent event) {
-		
 		try {
-			Parent allResultsViewParent = FXMLLoader.load(getClass().getResource("AllResults.fxml"));
-			Scene allResultsViewScene = new Scene(allResultsViewParent);
+			Parent mainViewParent = FXMLLoader.load(getClass().getResource("MainDefault.fxml"));
+			Scene mainViewScene = new Scene(mainViewParent);
 			
 			// Get the Stage information
 			Stage window = (Stage)(((Node) event.getSource()).getScene().getWindow());
-			window.setScene(allResultsViewScene);
+			window.setScene(mainViewScene);
 			window.show();
 		} catch (IOException e) {
-			System.out.println("Error switching to AllResults.fxml: IOException: " + e);
+			System.out.println("Error switching to MainDefault.fxml: IOException: " + e);
 			e.printStackTrace();
 		}
 		
 	}
+
 }

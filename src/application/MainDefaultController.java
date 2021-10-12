@@ -26,7 +26,7 @@ import javafx.stage.Stage;
  * Controller class for Main.fxml which calls 
  * initialize() prior to launching GUI. 
  * @author Derek DiLeo */
-public class MainController implements Initializable {
+public class MainDefaultController implements Initializable {
 	
 	// Declare local FXML Tags
 	@FXML Button showHideButton;
@@ -56,17 +56,10 @@ public class MainController implements Initializable {
 		String s = Character.toString((char) copyrightSymbol);
 		copyrightLabel.setText(s);
 		
-		// Display Raven image (if default website chosen)
-		if(Main.defaultSite) {
-			Image imageFile = new Image("/resources/img/image.png");
-			ImageView image = new ImageView();
-			image.setImage(imageFile);						
-		} else {
-			Image imageFile = new Image("/resources/img/image2.png");
-			ImageView image2 = new ImageView();
-			image2.setImage(imageFile);						
-		
-		}
+		// Display default image
+		Image imageFile2 = new Image("/resources/img/image2.png");
+		ImageView image2 = new ImageView();
+		image2.setImage(imageFile2);			
 		
 		// Display top ten results
 		labelText.setText(Main.sbTenString);
@@ -112,7 +105,7 @@ public class MainController implements Initializable {
 	@FXML public void handleShowHideButton(ActionEvent event) {
 		
 		try {
-			Parent allResultsViewParent = FXMLLoader.load(getClass().getResource("AllResults.fxml"));
+			Parent allResultsViewParent = FXMLLoader.load(getClass().getResource("AllResultsDefault.fxml"));
 			Scene allResultsViewScene = new Scene(allResultsViewParent);
 			
 			// Get the Stage information
@@ -120,7 +113,7 @@ public class MainController implements Initializable {
 			window.setScene(allResultsViewScene);
 			window.show();
 		} catch (IOException e) {
-			System.out.println("Error switching to AllResults.fxml: IOException: " + e);
+			System.out.println("Error switching to AllResultsDefault.fxml: IOException: " + e);
 			e.printStackTrace();
 		}
 		

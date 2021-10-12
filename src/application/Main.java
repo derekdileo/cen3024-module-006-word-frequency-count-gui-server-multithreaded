@@ -58,7 +58,7 @@ public class Main extends Application {
 		// Get user input for website, startLine & endLine...
 		// Or set to default values
 		userWebsite = QuestionBox.display("Website to Process?", sitePrompt, defaultWebsite);
-		if (userWebsite == defaultWebsite) {
+		if (userWebsite.equals(defaultWebsite)) {
 			defaultSite = true;
 			System.out.println("Default Website Chosen. Release the Raven!");
 		}
@@ -100,11 +100,19 @@ public class Main extends Application {
 		});
 		
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Main.fxml"));
-			Scene scene = new Scene(root,800,600);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			window.setScene(scene);
-			window.show();
+			if (defaultSite) {
+				BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Main.fxml"));				
+				Scene scene = new Scene(root,800,600);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				window.setScene(scene);
+				window.show();
+			} else {
+				BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("MainDefault.fxml"));				
+				Scene scene = new Scene(root,800,600);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				window.setScene(scene);
+				window.show();
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
