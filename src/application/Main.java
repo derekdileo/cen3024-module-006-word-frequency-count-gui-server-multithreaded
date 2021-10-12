@@ -15,18 +15,16 @@ import javafx.stage.Stage;
  * @author derekdileo */
 public class Main extends Application {
 	
-	// Declare variables
+	// QuestionBox variables
 	protected static String userWebsite = null;
 	protected static String sourceHead = null;
 	protected static String sourceEnd = null;
 	private String defaultWebsite =  "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
 	private String defaultSourceHead = "<h1>The Raven</h1>";
 	private String defaultSourceEnd = "<!--end chapter-->";
-	
 	private String sitePrompt = "Please enter a website to evaluate";
 	private String startPrompt = "Please paste some text from the first line of text to be evaluated.";
 	private String endPrompt = "Please paste some text from the last line of text to be evaluated.";
-	
 	
 	// Local Lists and Maps to hold return values from Class methods
 	private HashMap<String, Integer> wordFrequencyHashMap = new HashMap<String, Integer>();

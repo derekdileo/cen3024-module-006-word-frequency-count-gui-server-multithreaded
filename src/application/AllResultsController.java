@@ -86,7 +86,7 @@ public class AllResultsController implements Initializable  {
 	@FXML public void handleHyperlink(ActionEvent event) {
 		try {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
-			  URI oURL = new URI(WebScrapeToFile.website);
+			  URI oURL = new URI(Main.userWebsite);
 			  desktop.browse(oURL);
 			} catch (Exception e) {
 			  e.printStackTrace();
