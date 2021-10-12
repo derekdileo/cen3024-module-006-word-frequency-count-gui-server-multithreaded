@@ -54,7 +54,7 @@ public class AllResultsController implements Initializable  {
 		copyrightLabel.setText(s);
 		
 		// Push All Results to GUI
-		textAreaAllResults.setText(MainController.sbAll.toString());
+		textAreaAllResults.setText(Main.sbAllString);
 	}
 	
 	
