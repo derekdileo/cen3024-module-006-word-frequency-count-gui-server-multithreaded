@@ -26,6 +26,9 @@ public class Main extends Application {
 	private String sitePrompt = "Please enter a website to evaluate";
 	private String startPrompt = "Please paste some text from the first line of text to be evaluated.";
 	private String endPrompt = "Please paste some text from the last line of text to be evaluated.";
+	private String siteTitle = "Website to Processe?";
+	private String startTitle = "Start of Processing?";
+	private String endTitle = "End of Processing?";
 	protected static String[] userResponses;
 	
 	// Local Lists and Maps to hold return values from Class methods
@@ -85,7 +88,11 @@ public class Main extends Application {
 		// I tried for hours to rectify, but in the end, I had to bandaid with this. 
 		wordsArrayList.remove(0);
 		
-		processText();
+		for(int i = 0; i < wordsArrayList.size(); i++) {
+			System.out.println("line: " + i + ", ");
+		}
+		
+		processText(wordsArrayList);
 		
 		// Rename stage to window for sanity
 		window = primaryStage;
@@ -122,9 +129,18 @@ public class Main extends Application {
 	}
 
 	private String[] processUserInput() {
-		userWebsite = QuestionBox.display("Website to Process?", sitePrompt, defaultWebsite);
-		sourceHead = QuestionBox.display("Start of Processing?", startPrompt, defaultSourceHead);
-		sourceEnd = QuestionBox.display("End of Processing?", endPrompt, defaultSourceEnd);
+		// Gather URL from user (or set to default for EAP The Raven) 
+		userWebsite = QuestionBox.display(siteTitle, sitePrompt, defaultWebsite);
+		
+		// If userWebsite is not EAP, call overloaded QB.display which has
+		// validation to not allow a blank response. 
+		if (userWebsite.equals(defaultWebsite)) {
+			sourceHead = QuestionBox.display(startTitle, startPrompt, defaultSourceHead);
+			sourceEnd = QuestionBox.display(endTitle, endPrompt, defaultSourceEnd);			
+		} else {
+			sourceHead = QuestionBox.display(startTitle, startPrompt);
+			sourceEnd = QuestionBox.display(endTitle, endPrompt);			
+		}
 		String[] responses = {userWebsite, sourceHead, sourceEnd};
 		return responses;
 	}
@@ -133,7 +149,7 @@ public class Main extends Application {
 	 * Method prints all results to console and GUI with top 10 showing on first page
 	 * and all results showing on second page.
 	 * @author Derek DiLeo */
-	protected void processText() {
+	protected void processText(ArrayList<Word> wordsArrayList) {
 
 		// Build a string of top 10 results to push to Main.fxml GUI
 		sbTen = new StringBuilder();
