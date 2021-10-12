@@ -89,7 +89,7 @@ public class AllResultsDefaultController implements Initializable  {
 	@FXML public void handleHyperlink(ActionEvent event) {
 		try {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
-			  URI oURL = new URI(Main.userWebsite);
+			  URI oURL = new URI(Main.userResponses[0]);
 			  desktop.browse(oURL);
 			} catch (Exception e) {
 			  e.printStackTrace();
