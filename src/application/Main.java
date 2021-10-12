@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	// QuestionBox variables
+	protected static boolean defaultSite = false;
 	protected static String userWebsite = null;
 	protected static String sourceHead = null;
 	protected static String sourceEnd = null;
@@ -25,6 +26,7 @@ public class Main extends Application {
 	private String sitePrompt = "Please enter a website to evaluate";
 	private String startPrompt = "Please paste some text from the first line of text to be evaluated.";
 	private String endPrompt = "Please paste some text from the last line of text to be evaluated.";
+	
 	
 	// Local Lists and Maps to hold return values from Class methods
 	private HashMap<String, Integer> wordFrequencyHashMap = new HashMap<String, Integer>();
@@ -56,6 +58,10 @@ public class Main extends Application {
 		// Get user input for website, startLine & endLine...
 		// Or set to default values
 		userWebsite = QuestionBox.display("Website to Process?", sitePrompt, defaultWebsite);
+		if (userWebsite == defaultWebsite) {
+			defaultSite = true;
+			System.out.println("Default Website Chosen. Release the Raven!");
+		}
 		sourceHead = QuestionBox.display("Start of Processing?", startPrompt, defaultSourceHead);
 		sourceEnd = QuestionBox.display("End of Processing?", endPrompt, defaultSourceEnd);
 		

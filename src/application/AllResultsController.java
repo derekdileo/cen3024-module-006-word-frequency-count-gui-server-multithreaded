@@ -43,6 +43,9 @@ public class AllResultsController implements Initializable  {
 	// int value of copyright symbol for GUI footer  
 	private int copyrightSymbol = 169;
 	
+	// URL of GitHub repo
+	private String aboutSite = "https://github.com/derekdileo/cen3024-module-006-word-frequency-count-gui";
+	
 	/**
 	 * Method runs prior to GUI being displayed and calls 'sbAll' 
 	 * String built in MainController to be pushed to GUI 
@@ -73,7 +76,7 @@ public class AllResultsController implements Initializable  {
 	@FXML public void handleHelpAbout(ActionEvent event) {
 		try {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
-			  URI oURL = new URI("https://github.com/derekdileo/cen3024-module-006-word-frequency-count-gui");
+			  URI oURL = new URI(aboutSite);
 			  desktop.browse(oURL);
 			} catch (Exception e) {
 			  e.printStackTrace();

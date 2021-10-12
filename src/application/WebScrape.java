@@ -2,7 +2,6 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -13,11 +12,8 @@ import java.util.Scanner;
  * @author derekdileo */
 public class WebScrape {
 
-	
-	
 	// HashMap to store words and their occurances parsed from textfile
 	protected static HashMap<String, Integer> wordFrequency = new HashMap<String, Integer>();
-		
 	
 	/**
 	 * A Method for scrubbing text from a user-requested URL which removes HTML tags from each line, 
@@ -30,7 +26,6 @@ public class WebScrape {
 	 * @author Derek DiLeo */
 	public static HashMap<String, Integer> parseSite(String website, String sourceHead, String sourceEnd) {
 		
-		
 		try {
 		// Instantiate the URL class
 		URL url = new URL(website);
@@ -41,44 +36,37 @@ public class WebScrape {
 		// Instantiate the StringBuffer class to hold the result
 		StringBuffer sb = new StringBuffer();
 		
-		int lineCount = 0;
-		
 		while(sc.hasNextLine()) {
 			
 			String line = sc.nextLine();
-			lineCount++;
 			
 			// Detect user-indicated start
 			if(line.toString().contains(sourceHead)) {
 				
 				//System.out.println("Line containing sourceHead: " + line);
 				sb.append(" " + line);
-				lineCount++;
-				
 				
 				while(sc.hasNextLine()) {
 					
 					line = sc.nextLine();
-					System.out.println("Line: " + lineCount++ + "Inside while: " + line);
 					sb.append(" " + line);
 					
 					// Reached the user-indicated end
 					if(line.toString().contains(sourceEnd)) {
-						System.out.println("Reached the end!");
 						break;
 					}
+					
 				}
 				
 			}
 			
 		}
 		
-		// Retrieve the String from the String Buffere object
+		// Retrieve the String from the StringBuffer object
 		String result = sb.toString();
-		//System.out.println(result);
 		String[] words = null;
+		
 		// Remove the HTML tags
-		//result = result.toLowerCase().replaceAll("<[^>]*>", "");
 		String nohtml = result.toLowerCase().replaceAll("\\<.*?>", "");
 		
 		// Split string, ignoring all but letters of alphabet and apostrophe (to allow contractions)
@@ -104,106 +92,16 @@ public class WebScrape {
 				}
 			}
 		}
-		//System.out.print("Contents of the web page: " + result);
-	
+		
         sc.close();
         return wordFrequency;
         
 		} catch (IOException e) {
+			System.out.println("IOException in WebScrape.parseSite(): " + e);
 			e.printStackTrace();
 		}
 		
 		return null;
 	}
 	
-	
-	public static void printArrays(String[] words) {
-		for (String word : words) {
-			System.out.println(word.toString());
-		}
-	}
-	
-	public static ArrayList<Word> wordsArrayList;
-	
-	
-	// To test the Methods as they are written
-//	public static void main(String[] args) {
-//		
-//		// Testing parseSiteByLineNumbers() 
-//		String website = "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
-////		String[] wordsArray = parseSiteByLineNumbers(website, 77, 243);
-////		System.out.println("parseSiteByLineNumbers() Results: \n");
-////		System.out.println(Arrays.asList(wordsArray));
-//		
-//		
-//		
-//		// Testing parseSite() 
-//		String sourceHead = "<h1>The Raven</h1>";
-//		String sourceEnd = "<!--end chapter-->";
-//		HashMap<String, Integer> wordMap = parseSite(website, sourceHead, sourceEnd);
-//		
-//		wordsArrayList = WordFrequencyAnalyzer.processHashMap(wordMap);
-//		
-//		Collections.sort(wordsArrayList);
-//		Collections.reverse(wordsArrayList);
-//		
-//		for (Word word : wordsArrayList) {
-//			int index = wordsArrayList.indexOf(word);
-//			
-//			//Print each Word in wordsArrayListWords
-//			System.out.println(wordsArrayList.get(index).toString(index));
-//			
-//		}
-//	}
 }
-
-
-
-/*
- * 
- * 
- * /**
-	 * A method for scrubbing text from a user-entered website using with advanced knowledge of 
-	 * the number of the first and last lines of text to be processed by the application. 
-	 * 
-	 * @throws MalformedURLException
-	 * @throws IOException
-	 * @author Derek DiLeo */
-//	public static String[] parseSiteByLineNumbers(String website, int firstLine, int lastLine) {
-//		String[] words = null;
-//		try {
-//			// Navigate to site
-//			URL url = new URL(website);
-//			
-//			// Read text returned by server
-//			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-//			
-//			// Track lines to locate start and finish of poem
-//			int lineCount = 0;
-//			String line;
-//			//words = null;
-//			
-//            while ((line = in.readLine()) != null) {
-//                
-//            	lineCount++;
-//            	// firstLine = 77, lastLine = 243?
-//            	if(lineCount >= firstLine && lineCount <= lastLine) {
-//            		
-//            		String nohtml = line.toLowerCase().replaceAll("\\<.*?>", "");
-//            		// Split string, ignoring all but letters of alphabet and apostrophe (to allow contractions)
-//					words = nohtml.split("[^a-zA-Z’]+");
-//            		
-//            	}
-//            	
-//            }
-//            in.close();
-//		} catch (MalformedURLException e) {
-//			e.printStackTrace();
-//			System.out.println("MalformedURLException in WebScrape.parseSite(): " + e);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			System.out.println("IOException in WebScrape.parseSite(): " + e);
-//		}
-//		return words;
-//	}
-
