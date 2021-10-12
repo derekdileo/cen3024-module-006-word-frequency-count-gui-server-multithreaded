@@ -175,7 +175,7 @@ public class Main extends Application {
 		for (@SuppressWarnings("rawtypes")
 		Map.Entry entry : hm.entrySet()) {
 
-			// Pull key/value pairs for each word in wordFrequencyComplete HashMap
+			// Pull key/value pairs for each word in hm
 			String wordKey = entry.getKey().toString();
 			String wordValue = entry.getValue().toString();
 			int wordValueInt = Integer.parseInt(wordValue);
@@ -185,7 +185,9 @@ public class Main extends Application {
 			Word word = new Word(wordKey, wordValueInt);
 			wordsUnsorted.add(word);
 		}
+		
 		return wordsUnsorted;
+		
 	}
 	
 	/** Method uses ConfirmBox class to confirm if user wants to quit. */
@@ -197,5 +199,7 @@ public class Main extends Application {
            System.out.println("Window Closed!");
            window.close();
        }
+       
 	}
+	
 }
