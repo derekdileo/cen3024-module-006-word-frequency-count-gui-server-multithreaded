@@ -88,10 +88,6 @@ public class Main extends Application {
 		// I tried for hours to rectify, but in the end, I had to bandaid with this. 
 		wordsArrayList.remove(0);
 		
-		for(int i = 0; i < wordsArrayList.size(); i++) {
-			System.out.println("line: " + i + ", ");
-		}
-		
 		processText(wordsArrayList);
 		
 		// Rename stage to window for sanity
