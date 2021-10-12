@@ -28,7 +28,8 @@ public class QuestionBox {
      * @return String value of the user's response to the question.
      * @author Derek DiLeo */
     public static String display(String title, String question, String defaultValue) {
-        Stage window = new Stage(); // window is easier to grasp than 'stage'
+        System.out.println("QuestionBox.display(3) called!");
+    	Stage window = new Stage(); // window is easier to grasp than 'stage'
 
         // Create StackPanes (two needed for CSS to function correctly)
         StackPane stackPane1 = new StackPane();
@@ -65,8 +66,10 @@ public class QuestionBox {
             if(answer.equals("")) {
             	field.setText(defaultValue);
             	answer = field.getText();
+            	window.close();
+            } else {
+            	window.close();
             }
-            window.close();
         });
         
         // Allow Enter key to trigger "Submit" button
@@ -99,7 +102,8 @@ public class QuestionBox {
      * @return String value of the user's response to the question.
      * @author Derek DiLeo */
     public static String display(String title, String message) {
-        Stage window = new Stage(); // window is easier to grasp than 'stage'
+    	System.out.println("QuestionBox.display(2) called!");
+    	Stage window = new Stage(); // window is easier to grasp than 'stage'
 
         // Create StackPanes (two needed for CSS to function correctly)
         StackPane stackPane1 = new StackPane();
@@ -132,11 +136,13 @@ public class QuestionBox {
 
         // Handle when "Submit" button clicked
         submitButton.setOnAction(e -> {
-            answer = field.getText();
-            if(answer.equals("")) {
-            	AlertBox.display("Error!", "Please enter a valid response");
-            }
-            window.close();
+        	answer = field.getText();
+        	if (!answer.equals("")) {
+        		window.close();
+        	}
+        	if (answer.equals("")) {
+        		AlertBox.display("Error!", "Please enter a valid response");
+        	}
         });
         
         // Allow Enter key to trigger "Submit" button
@@ -145,8 +151,6 @@ public class QuestionBox {
         		submitButton.fire();
             }
         });
-        
-
 
         // Add all elements to VBox layout, center, add VBox layout and stackPane2 to stackPane1
         layout.getChildren().addAll(label, field, submitButton);
