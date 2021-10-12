@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -36,6 +37,13 @@ public class AlertBox {
         // Create button and define behavior
         Button okButton = new Button("OK");
         okButton.setOnAction(e -> window.close());
+        
+        // Allow Enter key to trigger "Submit" button
+        okButton.setOnKeyPressed(e -> {
+        	if (e.getCode().equals(KeyCode.ENTER)) {
+        		okButton.fire();
+            }
+        });
 
         // Create layout, add padding + elements, set center alignment
         VBox layout = new VBox(10);
