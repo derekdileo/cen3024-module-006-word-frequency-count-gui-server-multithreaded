@@ -47,10 +47,12 @@ public class QuestionBox {
         // Create a label to display the String message parameter which is passed from caller
         Label label = new Label();
         label.setText(message);
+        label.setFocusTraversable(true);
         
         // Create a text field for user to input a string
         TextField field = new TextField();
         field.setPromptText(defaultValue);
+        //field.setFocusTraversable(false);
 
         // Create two buttons and define their behavior
         Button submitButton = new Button("Submit");
