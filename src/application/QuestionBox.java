@@ -24,7 +24,7 @@ public class QuestionBox {
      * @return boolean value (yes or no)
      * @author Derek DiLeo
      */
-    public static String display(String title, String message) {
+    public static String display(String title, String message, String defaultValue) {
         Stage window = new Stage(); // window is easier to grasp than 'stage'
 
         // Create StackPanes (two needed for CSS to function correctly)
@@ -49,12 +49,17 @@ public class QuestionBox {
         
         // Create a text field for user to input a string
         TextField field = new TextField();
+        field.setPromptText(defaultValue);
 
         // Create two buttons and define their behavior
         Button submitButton = new Button("Submit");
 
         submitButton.setOnAction(e -> {
             answer = field.getText();
+            if(answer.equals("")) {
+            	field.setText(defaultValue);
+            	answer = field.getText();
+            }
             window.close();
         });
 

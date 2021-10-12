@@ -12,14 +12,14 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	//Variables to copy from when running for THIS site
-//	private String website =  "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
-//	private String sourceHead = "<h1>The Raven</h1>";
-//	private String sourceEnd = "<!--end chapter-->";
 
-	// Empty variables
+	// Declare variables
 	protected static String userWebsite = null;
 	protected static String sourceHead = null;
 	protected static String sourceEnd = null;
+	private String defaultWebsite =  "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
+	private String defaultSourceHead = "<h1>The Raven</h1>";
+	private String defaultSourceEnd = "<!--end chapter-->";
 	
 	private static String sitePrompt = "Please enter a website to evaluate";
 	private static String startPrompt = "Please paste some text from the first line of text to be evaluated.";
@@ -42,9 +42,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		
-		userWebsite = QuestionBox.display("Website to Process?", sitePrompt);
-		sourceHead = QuestionBox.display("Start of Processing?", startPrompt);
-		sourceEnd = QuestionBox.display("End of Processing?", endPrompt);
+		userWebsite = QuestionBox.display("Website to Process?", sitePrompt, defaultWebsite);
+		sourceHead = QuestionBox.display("Start of Processing?", startPrompt, defaultSourceHead);
+		sourceEnd = QuestionBox.display("End of Processing?", endPrompt, defaultSourceEnd);
 		
 		
 		// Rename stage to window for sanity
