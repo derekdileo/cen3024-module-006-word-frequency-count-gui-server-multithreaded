@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -54,6 +55,7 @@ public class QuestionBox {
         // Create two buttons and define their behavior
         Button submitButton = new Button("Submit");
 
+        // Handle when "Submit" button clicked
         submitButton.setOnAction(e -> {
             answer = field.getText();
             if(answer.equals("")) {
@@ -62,6 +64,14 @@ public class QuestionBox {
             }
             window.close();
         });
+        
+        // Allow Enter key to trigger "Submit" button
+        submitButton.setOnKeyPressed(e -> {
+        	if (e.getCode().equals(KeyCode.ENTER)) {
+        		submitButton.fire();
+            }
+        });
+        
 
 
         // Add all elements to VBox layout, center, add VBox layout and stackPane2 to stackPane1
