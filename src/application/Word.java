@@ -36,7 +36,32 @@ public class Word implements Comparable<Word> {
 	 * @param index is index location in ArrayList(of Word) sorted by frequency (value)  
 	 * @return returns a String to be printed to console and GUI */
 	public String toString(int index) {
-		return "\n" + (index + 1) + ") Word: " + word + "\t\tFrequency: " + frequency;
+		int size = word.length();
+		
+		// Account for 10 sticking out
+		if (index < 9) {
+			if(size <= 4) {
+				return "\n " + (index + 1) + ") Word: " + word + "\t\t\t\tFrequency: " + frequency;
+			} else if (size > 4 && size <= 11) {
+				return "\n " + (index + 1) + ") Word: " + word + "\t\t\tFrequency: " + frequency;
+			} else if (size > 11 && size <= 13){
+				return "\n " + (index + 1) + ") Word: " + word + "\t\tFrequency: " + frequency;
+			} else {
+				return "\n " + (index + 1) + ") Word: " + word + "\tFrequency: " + frequency;
+			}
+		} else {
+			if(size <= 4) {
+				return "\n" + (index + 1) + ") Word: " + word + "\t\t\t\tFrequency: " + frequency;
+			} else if (size > 4 && size <= 11) {
+				return "\n" + (index + 1) + ") Word: " + word + "\t\t\tFrequency: " + frequency;
+			} else if (size > 11 && size <= 13){
+				return "\n" + (index + 1) + ") Word: " + word + "\t\tFrequency: " + frequency;
+			} else {
+				return "\n" + (index + 1) + ") Word: " + word + "\tFrequency: " + frequency;
+			}
+			
+		}
+		
 	}
 
 }
