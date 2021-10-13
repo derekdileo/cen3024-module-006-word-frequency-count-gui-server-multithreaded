@@ -26,7 +26,6 @@ public class Database {
 			String password = "rootpassword";
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
-			System.out.println("Connection to database established!");
 			return conn;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -105,7 +104,7 @@ public class Database {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} finally {
-			System.out.println("The Method: post() is complete!");
+			System.out.println("The Method: post("+word+") is complete!");
 		}
 		
 	}
@@ -126,7 +125,7 @@ public class Database {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} finally {
-			System.out.println("The Method: update() is complete!");
+			System.out.println("The Method: update("+word+", "+frequency+") is complete!");
 		}
 		
 	}
