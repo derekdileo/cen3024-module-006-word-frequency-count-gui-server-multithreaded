@@ -157,18 +157,38 @@ public class Main extends Application {
 		
 		// Print all results to console and append all results to sbAll
 		System.out.println("\nSorted:");
-
-		// For first 10 results, begin printing to console and add to both results sets
-		for (int index = 0; index < 10; index++) {
-			System.out.println(wordsArrayList.get(index).toString(index));
-			sbTen.append(wordsArrayList.get(index).toString(index) + "\n");
-			sbAll.append(wordsArrayList.get(index).toString(index) + "\n");
-		}
 		
-		// Continue printing to console and adding to sbAll 
-		for (int index = 10; index < wordsArrayList.size(); index++) {
-			System.out.println(wordsArrayList.get(index).toString(index));
-			sbAll.append(wordsArrayList.get(index).toString(index) + "\n");
+		int size = wordsArrayList.size();
+		
+		// Process results based on size of wordsArrayList (total number of unique words).
+		// This is meant to prevent a null pointer exception for the second for loop
+		if(size >= 10) {
+			// For first 10 results, begin printing to console and add to both results sets
+			for (int index = 0; index < 10; index++) {
+				System.out.println(wordsArrayList.get(index).toString(index));
+				sbTen.append(wordsArrayList.get(index).toString(index) + "\n");
+				sbAll.append(wordsArrayList.get(index).toString(index) + "\n");
+			}
+			
+			// Continue printing to console and adding to sbAll 
+			for (int index = 10; index < wordsArrayList.size(); index++) {
+				System.out.println(wordsArrayList.get(index).toString(index));
+				sbAll.append(wordsArrayList.get(index).toString(index) + "\n");
+			}
+			
+		} else { 
+			// Print results to console and add to both results sets
+			for (int index = 0; index < size; index++) {
+				System.out.println(wordsArrayList.get(index).toString(index));
+				sbTen.append(wordsArrayList.get(index).toString(index) + "\n");
+				sbAll.append(wordsArrayList.get(index).toString(index) + "\n");
+			}
+			// Print null for remaining entries until top10 can be displayed
+			for (int index = size; index < 10; index++) {
+				System.out.println(wordsArrayList.get(index).toString(index));
+				sbTen.append("\n" + (index + 1) + ") Word: null \tFrequency: null");
+				sbAll.append("\n" + (index + 1) + ") Word: null \tFrequency: null");
+			}
 			
 		}
 		
