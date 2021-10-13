@@ -86,7 +86,7 @@ public class Main extends Application {
 		// New versions of Java do not add the word "" to the list. However, Java version 1.8 does
 		// This "" occurs 73 times on defaultSite and, therefore, appears at the top of the words list.
 		// I tried for hours to rectify, but in the end, I had to bandaid with this. 
-		wordsArrayList.remove(0);
+		//wordsArrayList.remove(0);
 		
 		processText(wordsArrayList);
 		
@@ -229,14 +229,30 @@ public class Main extends Application {
 		
 	}
 	
+	// Variables for testing createTable method
+	private static String columnOne = "word varchar(255) NOT NULL UNIQUE";
+	private static String columnTwo = "frequency int NOT NULL";
+	private static String primaryKey = "PRIMARY KEY(word)";
+	
+	
+	
 	/** Method uses ConfirmBox class to confirm if user wants to quit. */
 	protected static void closeProgram() {
        // Ask if user wants to exit
        Boolean answer = ConfirmBox.display("", "Are you sure you want to quit?");
        if (answer) {
            // Run any necessary code before window closes:
-           System.out.println("Window Closed!");
-           window.close();
+		   try {
+	    		// Drop and re-create words table
+				Database.deleteTable("words");
+				Database.createTable("words", columnOne, columnTwo, primaryKey);
+				System.out.println("Window Closed!");
+				window.close();
+		   } catch (Exception e) {
+			   System.out.println(e.getMessage());
+			   e.printStackTrace();
+		   }
+    	   
        }
        
 	}
