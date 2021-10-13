@@ -82,13 +82,18 @@ public class WebScrape {
 					// Get the current word frequency count
 					int n = wordFrequency.get(word);
 
-					// Increment, then replace count
+					// Increment, then replace count in HashMap
 					wordFrequency.put(word, ++n);
+					
+					// Increment, then replace count in database
+					Database.update(word, n);
+					
 				}
 
-				// Otherwise, place word in Hashmap, set count to 1
+				// Otherwise, place word in Hashmap (and database), set count to 1
 				else {
 					wordFrequency.put(word, 1);
+					Database.post(word, 1);
 				}
 			}
 		}
@@ -98,6 +103,9 @@ public class WebScrape {
         
 		} catch (IOException e) {
 			System.out.println("IOException in WebScrape.parseSite(): " + e);
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
