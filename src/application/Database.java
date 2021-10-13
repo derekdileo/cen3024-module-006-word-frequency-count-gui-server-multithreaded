@@ -2,12 +2,22 @@ package application;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
+
+/** 
+ * The Database class will be home to all methods which  
+ * pertain to the local MySQL database for this project.
+ * @author derekdileo */
 public class Database {
 
+	// Declare variables
 	protected static Connection conn;
 	
-	// Establish a connection with database
+	/** 
+	 * Method establishes a connection with local MySQL database
+	 * @return returns a database Connection to the caller
+	 * @throws Exception */
 	public static Connection getConnection() throws Exception {
 		try {
 			String driver = "com.mysql.cj.jdbc.Driver";
@@ -27,10 +37,105 @@ public class Database {
 		return null;
 	}
 	
+	/**
+	 * Method creates a table within the database (if it does not exist already).
+	 * @throws Exception */
+	public static void createTable() throws Exception {
+		try {
+			// Establish a connection
+			conn = getConnection();
+			
+			// Create PreparedStatement and Execute
+			String create = "CREATE TABLE IF NOT EXISTS other_words(word varchar(255) NOT NULL UNIQUE, frequency int NOT NULL, PRIMARY KEY(word))";
+			PreparedStatement pstmt = conn.prepareStatement(create);
+ 		 	pstmt.executeUpdate();
+ 		 	
+ 		 	// Close the connection
+			conn.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			System.out.println("Function complete.");
+		}
+		
+	}
+	
+	
+	/**
+	 * Method drops a table within the database (if it exists).
+	 * @throws Exception */
+	public static void deleteTable() throws Exception {
+		try {
+			// Establish a connection
+			conn = getConnection();
+			
+			// Create PreparedStatement and Execute
+			String delete = "DROP TABLE IF EXISTS other_words";
+			PreparedStatement pstmt = conn.prepareStatement(delete);
+ 		 	pstmt.executeUpdate();
+ 		 	
+ 		 	// Close the connection
+			conn.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			System.out.println("Function complete.");
+		}
+		
+	}
+	
+	
+	/**
+	 * Method posts (inserts) desired word and frequency values into the words table
+	 * @param word is the desired word to be posted to the words table
+	 * @param frequency is the frequency of occurrence of the word in our program 
+	 * @throws Exception */
+	public static void post(String word, int frequency) throws Exception {
+		try {
+			conn = getConnection();
+			String post = "INSERT INTO words (word, frequency) VALUES ('" + word +"', '" + frequency + "')";
+			PreparedStatement pstmt = conn.prepareStatement(post);
+			pstmt.executeUpdate();
+			conn.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			System.out.println("Post complete!");
+		}
+		
+	}
+
+	
+	
+	/**
+	 * Method updates the frequency (occurrences) of the selected word in the table
+	 * @param word is the target key whose frequency is to be updated
+	 * @param frequency is the new frequency of occurrence of the word in our program 
+	 * @throws Exception */
+	public static void update(String word, int frequency) throws Exception {
+		try {
+			conn = getConnection();
+			String update = "UPDATE words SET frequency = " + frequency + " WHERE word  = '" + word + "'";
+			PreparedStatement pstmt = conn.prepareStatement(update);
+			pstmt.executeUpdate();
+			conn.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			System.out.println("Post complete!");
+		}
+		
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		try {
-			getConnection();
+			update("The", 9);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
