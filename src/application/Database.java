@@ -15,9 +15,6 @@ public class Database {
 	protected static Connection conn;
 	
 	
-	
-	
-	
 	/** 
 	 * Method establishes a connection with local MySQL database
 	 * @return returns a database Connection to the caller
@@ -26,7 +23,7 @@ public class Database {
 		try {
 			String driver = "com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://localhost:3306/word_occurrences"; 
-//			String url = "jdbc:mysql://24.196.52.166:3306/database_name";
+//			String url = "jdbc:mysql://24.196.52.166:3306/database_name"; used for an online db
 			String username = "root";
 			String password = "rootpassword";
 			Class.forName(driver);
@@ -42,7 +39,11 @@ public class Database {
 	}
 	
 	/**
-	 * Method creates a table within the database (if it does not exist already).
+	 * Method creates a table within the database (if it does not exist already) with two columns and a primary key (more can be added later).
+	 * @param tableName is the desired name of the table to be created
+	 * @param columnOne is the desired name, data type and other identifiers for the first column in the table
+	 * @param columnTwo is the desired name, data type and other identifiers for the first column in the table
+	 * @param primaryKey is the desired primaryKey and any additional information which can be appended to the end of the PreparedStatement
 	 * @throws Exception */
 	public static void createTable(String tableName, String columnOne, String columnTwo, String primaryKey) throws Exception {
 		try {
@@ -60,13 +61,14 @@ public class Database {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} finally {
-			System.out.println("Function complete.");
+			System.out.println("The Method: createTable() is complete!");
 		}
 		
 	}
 	
 	/**
 	 * Method drops a table within the database (if it exists).
+	 * @param tableName is the name of the table to be deleted (if it exists).
 	 * @throws Exception */
 	public static void deleteTable(String tableName) throws Exception {
 		try {
@@ -84,7 +86,7 @@ public class Database {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} finally {
-			System.out.println("Function complete.");
+			System.out.println("The Method: deleteTable() is complete!");
 		}
 		
 	}
@@ -105,7 +107,7 @@ public class Database {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} finally {
-			System.out.println("Post complete!");
+			System.out.println("The Method: post() is complete!");
 		}
 		
 	}
@@ -126,7 +128,26 @@ public class Database {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} finally {
-			System.out.println("Post complete!");
+			System.out.println("The Method: update() is complete!");
+		}
+		
+	}
+	
+	/**
+	 * Method uses prepareStatement(statement).executeUpdate() to update the database. 
+	 * @param statement is the desired prepared statement to be passed in and executed.
+	 * @throws Exception */
+	public static void preparedUpdate(String statement) throws Exception {
+		try {
+			conn = getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(statement);
+			pstmt.executeUpdate();
+			conn.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			System.out.println("The Method: preparedUpdate() is complete!");
 		}
 		
 	}
