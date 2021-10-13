@@ -3,3 +3,7 @@
 	-fx-font-size: 10pt;
 	
 }
+
+.site-label {
+	-fx-text-alignment: left;
+}
