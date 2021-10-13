@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
-
 /** 
  * The Database class will be home to all methods which  
  * pertain to the local MySQL database for this project.
@@ -13,7 +12,6 @@ public class Database {
 
 	// Declare variables
 	protected static Connection conn;
-	
 	
 	/** 
 	 * Method establishes a connection with local MySQL database
