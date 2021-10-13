@@ -14,6 +14,10 @@ public class Database {
 	// Declare variables
 	protected static Connection conn;
 	
+	
+	
+	
+	
 	/** 
 	 * Method establishes a connection with local MySQL database
 	 * @return returns a database Connection to the caller
@@ -40,13 +44,13 @@ public class Database {
 	/**
 	 * Method creates a table within the database (if it does not exist already).
 	 * @throws Exception */
-	public static void createTable() throws Exception {
+	public static void createTable(String tableName, String columnOne, String columnTwo, String primaryKey) throws Exception {
 		try {
 			// Establish a connection
 			conn = getConnection();
 			
 			// Create PreparedStatement and Execute
-			String create = "CREATE TABLE IF NOT EXISTS other_words(word varchar(255) NOT NULL UNIQUE, frequency int NOT NULL, PRIMARY KEY(word))";
+			String create = "CREATE TABLE IF NOT EXISTS " + tableName + " (" + columnOne + ", " + columnTwo + ", " + primaryKey + ")";
 			PreparedStatement pstmt = conn.prepareStatement(create);
  		 	pstmt.executeUpdate();
  		 	
@@ -61,17 +65,16 @@ public class Database {
 		
 	}
 	
-	
 	/**
 	 * Method drops a table within the database (if it exists).
 	 * @throws Exception */
-	public static void deleteTable() throws Exception {
+	public static void deleteTable(String tableName) throws Exception {
 		try {
 			// Establish a connection
 			conn = getConnection();
 			
 			// Create PreparedStatement and Execute
-			String delete = "DROP TABLE IF EXISTS other_words";
+			String delete = "DROP TABLE IF EXISTS " + tableName + "";
 			PreparedStatement pstmt = conn.prepareStatement(delete);
  		 	pstmt.executeUpdate();
  		 	
@@ -85,7 +88,6 @@ public class Database {
 		}
 		
 	}
-	
 	
 	/**
 	 * Method posts (inserts) desired word and frequency values into the words table
@@ -107,8 +109,6 @@ public class Database {
 		}
 		
 	}
-
-	
 	
 	/**
 	 * Method updates the frequency (occurrences) of the selected word in the table
@@ -132,10 +132,16 @@ public class Database {
 	}
 	
 	
+	// Variables for testing createTable method
+	public static String columnOne = "word varchar(255) NOT NULL UNIQUE";
+	public static String columnTwo = "frequency int NOT NULL";
+	public static String primaryKey = "PRIMARY KEY(word)";
+	
 	
 	public static void main(String[] args) {
 		try {
-			update("The", 9);
+			
+			//createTable("new_table", columnOne, columnTwo, primaryKey);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
