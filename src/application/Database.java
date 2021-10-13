@@ -64,6 +64,31 @@ public class Database {
 	}
 	
 	/**
+	 * Method creates the standard words table within the database (if it does not exist already).
+	 * @param primaryKey is the desired primaryKey and any additional information which can be appended to the end of the PreparedStatement
+	 * @throws Exception */
+	public static void createWordsTable() throws Exception {
+		try {
+			// Establish a connection
+			conn = getConnection();
+			
+			// Create PreparedStatement and Execute
+			String create = "CREATE TABLE IF NOT EXISTS words (word varchar(255) NOT NULL UNIQUE, frequency int NOT NULL, PRIMARY KEY(word))";
+			PreparedStatement pstmt = conn.prepareStatement(create);
+ 		 	pstmt.executeUpdate();
+ 		 	
+ 		 	// Close the connection
+			conn.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			System.out.println("The Method: createTable() is complete!");
+		}
+		
+	}
+	
+	/**
 	 * Method drops a table within the database (if it exists).
 	 * @param tableName is the name of the table to be deleted (if it exists).
 	 * @throws Exception */
@@ -149,4 +174,20 @@ public class Database {
 		
 	}
 
+	
+	// Variables for testing createTable method
+	private static String columnOne = "word varchar(255) NOT NULL UNIQUE";
+	private static String columnTwo = "frequency int NOT NULL";
+	private static String primaryKey = "PRIMARY KEY(word)";
+	
+	public static void main(String[] args) {
+		try {
+			Database.deleteTable("words");
+			Database.createTable("words", columnOne, columnTwo, primaryKey);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }

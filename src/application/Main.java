@@ -128,6 +128,7 @@ public class Main extends Application {
 		// Gather URL from user (or set to default for EAP The Raven) 
 		userWebsite = QuestionBox.display(siteTitle, sitePrompt, defaultWebsite);
 		
+		
 		// If userWebsite is not EAP, call overloaded QB.display which has
 		// validation to not allow a blank response. 
 		if (userWebsite.equals(defaultWebsite)) {
@@ -233,8 +234,7 @@ public class Main extends Application {
 	private static String columnOne = "word varchar(255) NOT NULL UNIQUE";
 	private static String columnTwo = "frequency int NOT NULL";
 	private static String primaryKey = "PRIMARY KEY(word)";
-	
-	
+
 	
 	/** Method uses ConfirmBox class to confirm if user wants to quit. */
 	protected static void closeProgram() {
