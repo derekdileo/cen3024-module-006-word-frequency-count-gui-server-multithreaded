@@ -149,23 +149,5 @@ public class Database {
 		}
 		
 	}
-	
-	
-	// Variables for testing createTable method
-	public static String columnOne = "word varchar(255) NOT NULL UNIQUE";
-	public static String columnTwo = "frequency int NOT NULL";
-	public static String primaryKey = "PRIMARY KEY(word)";
-	
-	
-	public static void main(String[] args) {
-		try {
-			
-			//createTable("new_table", columnOne, columnTwo, primaryKey);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
 
 }
