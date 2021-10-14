@@ -1,5 +1,7 @@
 package application;
 
+import java.net.URL;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -25,7 +27,7 @@ public class QuestionBox {
     static String startAt;
     static String endAt;
     static String[] responses = new String[3];
-
+    
     /** Method that asks the user a question and returns a String of either their response or, if left
      * blank, a default response which in passed from the caller. 
      * @param title is a String at the top (title) of the pop-up window.
@@ -86,20 +88,18 @@ public class QuestionBox {
         
         // When "Submit" button clicked, collect user responses
         submitButton.setOnAction(e -> {
-            // test for valid URL
-//        	String site = siteField.getText();
-//        	try {
-//				@SuppressWarnings("unused")
-//				URL url = new URL(site);
-//			} catch (MalformedURLException e1) {
-//				AlertBox.display("Error", "Invalid URL");
-//				e1.printStackTrace();
-//			}
-
-        	responses[0] = siteField.getText();
-            responses[1] = startField.getText();
-            responses[2] = endField.getText();
-            window.close();
+        	// Validate URL
+        	String site = siteField.getText();
+        	boolean isValid = isValidURL(site);
+        	
+        	if(isValid) {
+        		responses[0] = site;
+        		responses[1] = startField.getText();
+        		responses[2] = endField.getText();
+        		window.close();
+        	} else {
+        		AlertBox.display("Error Invalid URL", "Please Try Again.");
+        	}
         });
         
         // Allow Enter key to trigger "Submit" button
@@ -149,80 +149,18 @@ public class QuestionBox {
         window.showAndWait();
         return responses;
     }
+  
     
-    /** Overloaded method that asks the user a question and returns their response in String format
-     * and will not throw AlertBox is response is left blank. 
-     * @param title is a String at the top (title) of the pop-up window.
-     * @param question is the question to ask the user and is displayed via Label class.
-     * @return String value of the user's response to the question.
-     * @author Derek DiLeo */
-//    public static String display(String title, String message) {
-//    	System.out.println("QuestionBox.display(2) called!");
-//    	Stage window = new Stage(); // window is easier to grasp than 'stage'
-//
-//        // Create StackPanes (two needed for CSS to function correctly)
-//        StackPane stackPane1 = new StackPane();
-//        StackPane stackPane2 = new StackPane();
-//
-//        // Create layout and add padding
-//        VBox layout = new VBox(10);
-//        layout.setPadding(new Insets(10,10,10,10));
-//
-//        // Block any input events until this window is closed
-//        window.initModality(Modality.APPLICATION_MODAL);
-//
-//        // Set window title and dimensions
-//        window.setTitle(title);
-//        window.setMinWidth(250);
-//        window.setMinHeight(100);
-//
-//        // Create a label to display the String message parameter which is passed from caller
-//        Label label = new Label();
-//        label.setText(message);
-//        label.setFocusTraversable(true);
-//        
-//        // Create a text field for user to input a string
-//        TextField field = new TextField();
-//        field.setPromptText(promptText);
-//        //field.setFocusTraversable(false);
-//
-//        // Create two buttons and define their behavior
-//        Button submitButton = new Button("Submit");
-//
-//        // Handle when "Submit" button clicked
-//        submitButton.setOnAction(e -> {
-//        	userSite = field.getText();
-//        	if (!userSite.equals("")) {
-//        		window.close();
-//        	}
-//        	if (userSite.equals("")) {
-//        		AlertBox.display("Error!", "Please enter a valid response");
-//        	}
-//        });
-//        
-//        // Allow Enter key to trigger "Submit" button
-//        submitButton.setOnKeyPressed(e -> {
-//        	if (e.getCode().equals(KeyCode.ENTER)) {
-//        		submitButton.fire();
-//            }
-//        });
-//
-//        // Add all elements to VBox layout, center, add VBox layout and stackPane2 to stackPane1
-//        layout.getChildren().addAll(label, field, submitButton);
-//        layout.setAlignment(Pos.CENTER);
-//        stackPane1.getChildren().addAll(stackPane2, layout);
-//
-//        // Create and set Scene from stackPane1
-//        Scene scene = new Scene(stackPane1);
-//        window.setScene(scene);
-//
-//        // Show window and wait for user interaction
-//        window.showAndWait();
-//        return userSite;
-//    }
-    
-    
-    
-    
+    public static boolean isValidURL(String urlString) {
+    	try {
+    		URL url = new URL(urlString);
+    		url.toURI();
+    		return true;
+    	} catch (Exception e) {
+    		
+    		return false;
+    	}
+    	
+    }
     
 }
