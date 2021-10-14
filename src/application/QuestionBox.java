@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -34,8 +35,8 @@ public class QuestionBox {
     	Stage window = new Stage(); // window is easier to grasp than 'stage'
 
         // Create StackPanes (two needed for CSS to function correctly)
-        StackPane stackPane1 = new StackPane();
-        StackPane stackPane2 = new StackPane();
+        StackPane qBoxStackPane1 = new StackPane();
+        StackPane qBoxStackPane2 = new StackPane();
 
         // Create layout and add padding
         VBox layout = new VBox(10);
@@ -50,9 +51,11 @@ public class QuestionBox {
         window.setMinHeight(100);
 
         // Create a label to display the String message parameter which is passed from caller
-        Label instruction = new Label();
-        instruction.setText(prompts[1]);
-        instruction.setFocusTraversable(true);
+        Label header = new Label();
+        header.setText(prompts[1]);
+        header.setFocusTraversable(true);
+        header.setStyle("-fx-font-size: 13pt;");
+        //header.setStyle("-fx-font-weight: bold;");
         
         // Create text fields for user input
         Label siteLabel = new Label();
@@ -71,23 +74,16 @@ public class QuestionBox {
         TextField endField = new TextField();
         endField.setPromptText(prompts[4]);
 
-        // Create two buttons and define their behavior
+        // Create two buttons
         Button submitButton = new Button("Submit");
-
+        Button testButton = new Button("   ");
+        
         // Handle when "Submit" button clicked
         submitButton.setOnAction(e -> {
             responses[0] = siteField.getText();
             responses[1] = startField.getText();
             responses[2] = endField.getText();
-            
             window.close();
-           
-//            if(userSite.equals("")) {
-////            	siteField.setText(defaultValue);
-////            	userSite = siteField.getText();
-//            } else {
-//            	window.close();
-//            }
         });
         
         // Allow Enter key to trigger "Submit" button
@@ -97,23 +93,39 @@ public class QuestionBox {
             }
         });
         
-
-
-        // Add all elements to VBox layout, center, add VBox layout and stackPane2 to stackPane1
-        layout.getChildren().addAll(instruction, siteLabel, siteField, startLabel, startField, endLabel, endField, submitButton);
-        layout.setAlignment(Pos.CENTER);
-        stackPane1.getChildren().addAll(stackPane2, layout);
+        // Handle when "test" button clicked
+        testButton.setOnAction(e -> {
+            responses[0] = defaultEntries[0];
+            responses[1] = defaultEntries[1];
+            responses[2] = defaultEntries[2];
+            window.close();
+        });
+        
+        // Allow Enter key to trigger "submit" button
+        submitButton.setOnKeyPressed(e -> {
+        	if (e.getCode().equals(KeyCode.ENTER)) {
+        		submitButton.fire();
+            }
+        });
+        
+        
+        // Create an AnchorPane container for buttons at bottom
+        AnchorPane buttons = new AnchorPane();
+        // Anchor them to either side of the Pane
+        AnchorPane.setLeftAnchor(submitButton, 20.0);
+        AnchorPane.setRightAnchor(testButton, 20.0);
+//        buttons.setPadding(new Insets(10,50,10,50));
+//        buttons.setStyle("-fx-hgap: 100;");
+        
+        // Add all elements to layout, add VBox layout and stackPane2 to stackPane1
+        buttons.getChildren().addAll(submitButton, testButton);
+        //buttons.setParent(Pos.CENTER);
+        layout.getChildren().addAll(header, siteLabel, siteField, startLabel, startField, endLabel, endField, buttons);
+        layout.setAlignment(Pos.CENTER_LEFT);
+        qBoxStackPane1.getChildren().addAll(qBoxStackPane2, layout);
 
         // Create and set Scene from stackPane1
-        Scene scene = new Scene(stackPane1);
-        //String css = ManualStyle.class.getResource("application.css").toExternalForm();
-        
-        //scene.getStylesheets().add(Main.getUserAgentStylesheet());
-        
-        
-//        scene.getStylesheets().add(css);
-        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        Scene scene = new Scene(qBoxStackPane1);
         window.setScene(scene);
 
         // Show window and wait for user interaction

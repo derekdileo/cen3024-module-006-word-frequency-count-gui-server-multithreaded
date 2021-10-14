@@ -26,9 +26,9 @@ public class Main extends Application {
 	private String[] defaultEntries = {defaultWebsite, defaultSourceHead, defaultSourceEnd};
 	
 	
-	private String title = "Website to Process?";
+	private String title = "Word Frequency Counter";
 	private String instruction = "Enter a URL to count frequency of each word.";
-	private String sitePlaceholder = "Please enter a website to evaluate";
+	private String sitePlaceholder = "Enter a website to evaluate";
 	private String startPlaceholder= "Text from first line";
 	private String endPlaceholder = "Text from last line.";
 	private String[] questionBoxPrompts = {title, instruction, sitePlaceholder, startPlaceholder, endPlaceholder};
