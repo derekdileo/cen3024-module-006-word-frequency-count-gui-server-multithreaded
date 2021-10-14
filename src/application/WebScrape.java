@@ -2,7 +2,6 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -11,9 +10,6 @@ import java.util.Scanner;
  * so the ArrayList can be sorted by number of occurrences.
  * @author derekdileo */
 public class WebScrape {
-
-	// HashMap to store words and their occurances parsed from textfile
-	protected static HashMap<String, Integer> wordFrequency = new HashMap<String, Integer>();
 	
 	/**
 	 * A Method for scrubbing text from a user-requested URL which removes HTML tags from each line, 
@@ -24,7 +20,7 @@ public class WebScrape {
 	 * @throws IOException
 	 * @return String[] which contains every word on the requested site
 	 * @author Derek DiLeo */
-	public static HashMap<String, Integer> parseSite(String website, String sourceHead, String sourceEnd) {
+	public static String[] parseSite(String website, String sourceHead, String sourceEnd) {
 		
 		try {
 		// Instantiate the URL class
@@ -72,38 +68,55 @@ public class WebScrape {
 		// Split string, ignoring all but letters of alphabet and apostrophe (to allow contractions)
 		words = nohtml.split("[^a-zA-Z’]+"); 
 
-		// Add all to HashMap<String, Integer> (word, frequency of occurence) 
-		for (String word : words) {
-			// Do not allow white blank white space or "mdash"
-			if (word.toString() != "" && word.toString() != " " && !word.toString().contains("mdash")
-					&& !word.toString().contains("	")) {
-				
-				int frequency = Database.queryFrequency(word);
-				
-				// If word already in database...
-				if (frequency != -1) {
-					// Increment the frequency
-					Database.update(word, ++frequency); 
-				} else {
-					// Add to database
-					Database.post(word, 1);
-				}
-				
-			}
-		}
-		
         sc.close();
-        return wordFrequency;
+        return words;
         
 		} catch (IOException e) {
 			System.out.println("IOException in WebScrape.parseSite(): " + e);
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Use string array from parseSite() to push words to database. 
+	 * @param words is a string array created by parseSite() method which 
+	 * contains every word (and its multiples) that was parsed.
+	 */
+	public static void wordsToDB(String[] words) {
+		
+		try {
+			for (String word : words) {
+				// Do not allow white blank white space or "mdash"
+				if (word.toString() != "" && word.toString() != " " && !word.toString().contains("mdash")
+						&& !word.toString().contains("	")) {
+					
+					// Check if word exists in db (-1 if not)
+					int frequency = Database.queryFrequency(word);
+					
+					// If word already in database...
+					if (frequency != -1) {
+						// Increment the frequency
+						System.out.println("Word: " + word + ", frequency: " + frequency);
+						Database.update(word, ++frequency);
+					} else {
+						// Add to database
+						System.out.println("New word!");
+						Database.post(word, 1);
+					}
+					
+				}
+				
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Error in WebScrape.wordsToDB: " + e.getMessage());
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

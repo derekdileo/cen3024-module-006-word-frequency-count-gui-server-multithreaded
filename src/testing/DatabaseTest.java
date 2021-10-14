@@ -46,5 +46,6 @@ class DatabaseTest {
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {
 		Database.deleteTable("words");
+		Database.createWordsTable("words");
 	}
 }

@@ -149,6 +149,40 @@ public class Database {
 	}
 	
 	
+	/**
+	 * Method to check databse 
+	 * @param word
+	 * @return
+	 */
+	public static void displayResults() {
+		
+		try {
+			conn = getConnection();
+			String query = "SELECT * FROM words ORDER BY frequency DESC";
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			String word = null;
+			int frequency = 0;
+			int wordCount = 0;
+			
+			while(rs.next()) {
+				word = rs.getString(1);
+				frequency = rs.getInt(2);
+				System.out.println("Word: " + word + "Frequency: " + frequency);
+			}
+			conn.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			System.out.println("The Method: queryAll is complete!");
+		}
+		
+	}
+	
+	
+	
+	
 	
 	/**
 	 * Method posts (inserts) desired word and frequency values into the words table
@@ -230,6 +264,9 @@ public class Database {
 			post("He", 2);
 			freq = queryFrequency("Alas");
 			System.out.println(freq);
+			
+			displayResults();
+			
 			deleteTable("words");
 			createWordsTable("words");
 			
