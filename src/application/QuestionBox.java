@@ -32,6 +32,7 @@ public class QuestionBox {
      * blank, a default response which in passed from the caller. 
      * @param prompts is a String array that contains the all of the text variables for the window (title, heading, labels, etc). 
      * @param defaultEntries direct the app to parse EAP's The Raven (per professor's original instructions).
+     * @param alertBox holds title and message Strings to provide user with some instructions at launch.
      * @return String array of the user's responses.
      * @author Derek DiLeo */
     public static String[] display(String[] prompts, String[] defaultEntries, String[] alertBox) {
@@ -88,20 +89,29 @@ public class QuestionBox {
         testButton.setOpacity(0.00); 
         testButton.setFocusTraversable(false);
         
-        // When "Submit" button clicked, collect user responses
+        // When "Submit" button clicked, 
+        // validate and collect user responses
         submitButton.setOnAction(e -> {
-        	// Validate URL
+        	// Validate URL, start and end fields
         	String site = siteField.getText();
-        	boolean isValid = isValidURL(site);
+        	String start = startField.getText();
+        	String end = endField.getText();
+        	boolean validURL = isValidURL(site);
+        	boolean validEntries = areValidEntries(start, end);
         	
-        	if(isValid) {
-        		responses[0] = site;
-        		responses[1] = startField.getText();
-        		responses[2] = endField.getText();
-        		window.close();
+        	if(validURL) {
+        		if(validEntries) {
+        			responses[0] = site;
+        			responses[1] = start;
+        			responses[2] = end;
+        			window.close();
+        		} else {
+        			AlertBox.display("Error", "Start/Finish fields cannot be left blank.");
+        		}
         	} else {
         		AlertBox.display("Error Invalid URL", "Please Try Again.");
         	}
+        	
         });
         
         // Allow Enter key to trigger "Submit" button
@@ -121,9 +131,8 @@ public class QuestionBox {
         });
         
         // Create an AnchorPane container for buttons at bottom
-        AnchorPane buttons = new AnchorPane();
-        
         // Anchor them to either side of the Pane
+        AnchorPane buttons = new AnchorPane();
         AnchorPane.setLeftAnchor(submitButton, 0.0);
         AnchorPane.setRightAnchor(testButton, 0.0);
         
@@ -166,6 +175,18 @@ public class QuestionBox {
     		return false;
     	}
     	
+    }
+    
+    /**
+     * Method to ensure start and end fields are not left blank.
+     * @param start is the start field passed into QuestionBox by user.
+     * @param end is the end field passed into QuestionBox by user.
+     * @return boolean if both are not left blank. */
+    public static boolean areValidEntries(String start, String end) {
+    	if (!start.equals("") && !end.equals("")) {
+    		return true;
+    	} 
+    	return false;
     }
     
 }
