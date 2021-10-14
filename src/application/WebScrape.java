@@ -21,7 +21,6 @@ public class WebScrape {
 	 * @return String[] which contains every word on the requested site
 	 * @author Derek DiLeo */
 	public static String[] parseSite(String website, String sourceHead, String sourceEnd) {
-		
 		try {
 		// Instantiate the URL class
 		URL url = new URL(website);
@@ -84,10 +83,8 @@ public class WebScrape {
 	/**
 	 * Use string array from parseSite() to push words to database. 
 	 * @param words is a string array created by parseSite() method which 
-	 * contains every word (and its multiples) that was parsed.
-	 */
+	 * contains every word (and its multiples) that was parsed. */
 	public static void wordsToDB(String[] words) {
-		
 		try {
 			for (String word : words) {
 				// Do not allow white blank white space or "mdash"

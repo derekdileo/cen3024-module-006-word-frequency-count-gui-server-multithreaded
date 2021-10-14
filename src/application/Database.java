@@ -37,34 +37,6 @@ public class Database {
 	}
 	
 	/**
-	 * Method creates a table within the database (if it does not exist already) with two columns and a primary key (more can be added later).
-	 * @param tableName is the desired name of the table to be created
-	 * @param columnOne is the desired name, data type and other identifiers for the first column in the table
-	 * @param columnTwo is the desired name, data type and other identifiers for the first column in the table
-	 * @param primaryKey is the desired primaryKey and any additional information which can be appended to the end of the PreparedStatement
-	 * @throws Exception */
-	public static void createTable(String tableName, String columnOne, String columnTwo, String primaryKey) throws Exception {
-		try {
-			// Establish a connection
-			conn = getConnection();
-			
-			// Create PreparedStatement and Execute
-			String create = "CREATE TABLE IF NOT EXISTS " + tableName + " (" + columnOne + ", " + columnTwo + ", " + primaryKey + ")";
-			PreparedStatement pstmt = conn.prepareStatement(create);
- 		 	pstmt.executeUpdate();
- 		 	
- 		 	// Close the connection
-			conn.close();
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} finally {
-			System.out.println("The Method: createTable() is complete!");
-		}
-		
-	}
-	
-	/**
 	 * Method creates the standard words table within the database (if it does not exist already).
 	 * @param primaryKey is the desired primaryKey and any additional information which can be appended to the end of the PreparedStatement
 	 * @throws Exception */
@@ -106,83 +78,13 @@ public class Database {
  		 	// Close the connection
 			conn.close();
 		} catch(Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("Error in Database.deleteTable(): " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			System.out.println("The Method: deleteTable() is complete!");
 		}
 		
 	}
-	
-	/**
-	 * Method to check databse 
-	 * @param word
-	 * @return
-	 */
-	public static int queryFrequency(String word) {
-		
-		try {
-			conn = getConnection();
-			String post = "SELECT frequency FROM words WHERE word = '" + word + "'";
-			PreparedStatement pstmt = conn.prepareStatement(post);
-			ResultSet rs = pstmt.executeQuery();
-			int frequency = 0;
-			if(rs.next()) {
-				frequency = rs.getInt(1);
-				System.out.println("Frequency: " + frequency);
-				conn.close();
-				return frequency;
-			} else {
-				frequency = -1;
-				conn.close();
-				System.out.println("Error: " + word + " is not in database...");
-				return frequency;
-			}
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} finally {
-			System.out.println("The Method: queryFrequency("+word+") is complete!");
-		}
-		return -1;
-		
-	}
-	
-	
-	/**
-	 * Method to check databse 
-	 * @param word
-	 * @return
-	 */
-	public static void displayResults() {
-		
-		try {
-			conn = getConnection();
-			String query = "SELECT * FROM words ORDER BY frequency DESC";
-			PreparedStatement pstmt = conn.prepareStatement(query);
-			ResultSet rs = pstmt.executeQuery();
-			String word = null;
-			int frequency = 0;
-			int wordCount = 0;
-			
-			while(rs.next()) {
-				word = rs.getString(1);
-				frequency = rs.getInt(2);
-				System.out.println("Word: " + word + "Frequency: " + frequency);
-			}
-			conn.close();
-		} catch(Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} finally {
-			System.out.println("The Method: queryAll is complete!");
-		}
-		
-	}
-	
-	
-	
-	
 	
 	/**
 	 * Method posts (inserts) desired word and frequency values into the words table
@@ -199,9 +101,7 @@ public class Database {
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-		} finally {
-			System.out.println("The Method: post("+word+") is complete!");
-		}
+		} 
 		
 	}
 	
@@ -220,41 +120,67 @@ public class Database {
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-		} finally {
-			System.out.println("The Method: update("+word+", "+frequency+") is complete!");
-		}
+		} 
 		
 	}
 	
 	/**
-	 * Method uses prepareStatement(statement).executeUpdate() to update the database. 
-	 * @param statement is the desired prepared statement to be passed in and executed.
-	 * @throws Exception */
-	public static void preparedUpdate(String statement) throws Exception {
+	 * Method to query for a word and return its frequency (if present)- 
+	 * otherwise, frequency is set to -1. 
+	 * @param word is the word to search for in the database
+	 * @return frequency of the word (or -1 if word not present in db) */
+	public static int queryFrequency(String word) {
 		try {
 			conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(statement);
-			pstmt.executeUpdate();
-			conn.close();
+			String query = "SELECT frequency FROM words WHERE word = '" + word + "'";
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			int frequency = 0;
+			if(rs.next()) {
+				frequency = rs.getInt(1);
+				conn.close();
+				return frequency;
+			} else {
+				frequency = -1;
+				conn.close();
+				return frequency;
+			}
+		} catch(Exception e) {
+			System.out.println("Error in Database.queryFrequency(): " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return -1; // if not successful
+	}
+	
+	/**
+	 * Method that queries database for * FROM words ORDER BY 
+	 * frequency DESC and returns a ResultSet. 
+	 * @return ResultSet of query SELECT * FROM words ORDER BY frequency DESC */
+	public static ResultSet getResults() {
+		try {
+			conn = getConnection();
+			String query = "SELECT * FROM words ORDER BY frequency DESC";
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			ResultSet results = pstmt.executeQuery();
+			return results;
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} finally {
-			System.out.println("The Method: preparedUpdate() is complete!");
+			System.out.println("The Method: queryAll is complete!");
 		}
 		
+		return null; // if not successful
 	}
-
 	
-	// Variables for testing createTable method
-	private static String columnOne = "word varchar(255) NOT NULL UNIQUE";
-	private static String columnTwo = "frequency int NOT NULL";
-	private static String primaryKey = "PRIMARY KEY(word)";
-	
+	/**
+	 * Used for testing while coding and will be deleted later.
+	 * @param args */
 	public static void main(String[] args) {
 		try {
 			deleteTable("words");
-			createTable("words", columnOne, columnTwo, primaryKey);
+			createWordsTable("words");
 			// Should pass and return 2
 			post("The", 2);
 			int freq = queryFrequency("The");
@@ -265,15 +191,15 @@ public class Database {
 			freq = queryFrequency("Alas");
 			System.out.println(freq);
 			
-			displayResults();
+			getResults();
 			
 			deleteTable("words");
 			createWordsTable("words");
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 }
