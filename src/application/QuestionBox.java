@@ -29,7 +29,7 @@ public class QuestionBox {
      * @param defaultValue is the value to return if user doesn't enter a response.
      * @return String value of the user's response to the question.
      * @author Derek DiLeo */
-    public static String[] display(String title, String instruction, String sitePlaceholder, String startPlaceholder, String endPlaceholder) {
+    public static String[] display(String[] prompts, String[] defaultEntries) {
         System.out.println("QuestionBox.display(3) called!");
     	Stage window = new Stage(); // window is easier to grasp than 'stage'
 
@@ -45,31 +45,31 @@ public class QuestionBox {
         window.initModality(Modality.APPLICATION_MODAL);
 
         // Set window title and dimensions
-        window.setTitle(title);
+        window.setTitle(prompts[0]);
         window.setMinWidth(250);
         window.setMinHeight(100);
 
         // Create a label to display the String message parameter which is passed from caller
-        Label label = new Label();
-        label.setText(instruction);
-        label.setFocusTraversable(true);
+        Label instruction = new Label();
+        instruction.setText(prompts[1]);
+        instruction.setFocusTraversable(true);
         
-        // Create a text fields for user input
+        // Create text fields for user input
         Label siteLabel = new Label();
         siteLabel.setId("site-label");
         siteLabel.setText("Website to Parse");
         TextField siteField = new TextField();
-        siteField.setPromptText(sitePlaceholder);
+        siteField.setPromptText(prompts[2]);
         
         Label startLabel = new Label();
         startLabel.setText("Where should it start?");
         TextField startField = new TextField();
-        startField.setPromptText(startPlaceholder);
+        startField.setPromptText(prompts[3]);
         
         Label endLabel = new Label();
         endLabel.setText("Where to finish.");
         TextField endField = new TextField();
-        endField.setPromptText(endPlaceholder);
+        endField.setPromptText(prompts[4]);
 
         // Create two buttons and define their behavior
         Button submitButton = new Button("Submit");
@@ -100,7 +100,7 @@ public class QuestionBox {
 
 
         // Add all elements to VBox layout, center, add VBox layout and stackPane2 to stackPane1
-        layout.getChildren().addAll(label, siteLabel, siteField, startLabel, startField, endLabel, endField, submitButton);
+        layout.getChildren().addAll(instruction, siteLabel, siteField, startLabel, startField, endLabel, endField, submitButton);
         layout.setAlignment(Pos.CENTER);
         stackPane1.getChildren().addAll(stackPane2, layout);
 

@@ -23,6 +23,7 @@ public class Main extends Application {
 	private String defaultWebsite =  "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
 	private String defaultSourceHead = "<h1>The Raven</h1>";
 	private String defaultSourceEnd = "<!--end chapter-->";
+	private String[] defaultEntries = {defaultWebsite, defaultSourceHead, defaultSourceEnd};
 	
 	
 	private String title = "Website to Process?";
@@ -30,12 +31,13 @@ public class Main extends Application {
 	private String sitePlaceholder = "Please enter a website to evaluate";
 	private String startPlaceholder= "Text from first line";
 	private String endPlaceholder = "Text from last line.";
+	private String[] questionBoxPrompts = {title, instruction, sitePlaceholder, startPlaceholder, endPlaceholder};
 	
 	
-	private String startInstruction = "Please paste some text from the first line of text to be evaluated.";
-	private String endPrompt = "Please paste some text from the last line of text to be evaluated.";
-	private String startTitle = "Start of Processing?";
-	private String endTitle = "End of Processing?";
+//	private String startInstruction = "Please paste some text from the first line of text to be evaluated.";
+//	private String endPrompt = "Please paste some text from the last line of text to be evaluated.";
+//	private String startTitle = "Start of Processing?";
+//	private String endTitle = "End of Processing?";
 	protected static String[] userResponses;
 	
 	// Local Lists and Maps to hold return values from Class methods
@@ -134,9 +136,9 @@ public class Main extends Application {
 	private String[] processUserInput() {
 		// Gather URL from user (or set to default for EAP The Raven) 
 		
-		String[] responses = new String[2];
+		String[] responses = new String[3];
 		
-		responses = QuestionBox.display(title, instruction, sitePlaceholder, startPlaceholder, endPlaceholder);
+		responses = QuestionBox.display(questionBoxPrompts, defaultEntries);
 		
 		
 		// If userWebsite is not EAP, call overloaded QB.display which has

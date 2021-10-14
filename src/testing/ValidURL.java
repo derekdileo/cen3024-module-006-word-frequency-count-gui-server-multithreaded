@@ -4,9 +4,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import application.WebScrape;
 
 class ValidURL {
 
@@ -28,23 +25,15 @@ class ValidURL {
 	void tearDown() throws Exception {
 	}
 
-	@Test()
-	void whenInvalidURLPassed_thenValidationFails() {
-		String userWebsite = "";
-		String sourceHead = "the raven";
-		String sourceEnd = "end";
-		
-		WebScrape.parseSite(userWebsite, sourceHead, sourceEnd);
-
-//	    String expectedMessage = "no protocol: foo";
-//	    String actualMessage = exception.getMessage();
-//	    System.out.println("\n\nActual Message: " + actualMessage + ">>>>>>>\n\n");
-//	    System.out.println("\n\nActual Message: " + actualMessage + ">>>>>>>\n\n");
-//	    System.out.println("\n\nActual Message: " + actualMessage + ">>>>>>>\n\n");
-
-	    //assertTrue(actualMessage.contains(expectedMessage));
-		
-	}
+//	@Test()
+//	void whenInvalidURLPassed_thenValidationFails() {
+//		String userWebsite = "";
+//		String sourceHead = "the raven";
+//		String sourceEnd = "end";
+//		
+//		WebScrape.parseSite(userWebsite, sourceHead, sourceEnd);
+//
+//	}
 	
 	
 //	@Test
