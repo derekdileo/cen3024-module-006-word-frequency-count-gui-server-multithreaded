@@ -23,6 +23,8 @@ class DatabaseTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		Database.update("The", 5);
+		System.out.println("Frequency of 'The' updated to 5");
 	}
 
 
@@ -37,6 +39,23 @@ class DatabaseTest {
 		int frequency = Database.queryFrequency("The");
 		// expected, actual
 		assertNotEquals(6, frequency);
+	}
+	
+	
+	@Test
+	void updateFrequency_testPass() {
+		Database.update("The", 7);
+		int frequency = Database.queryFrequency("The");
+		// expected, actual
+		assertEquals(7, frequency);
+	}
+	
+	@Test
+	void updateFrequency_testFail() {
+		Database.update("The", 7);
+		int frequency = Database.queryFrequency("The");
+		// expected, actual
+		assertNotEquals(8, frequency);
 	}
 
 	@AfterEach

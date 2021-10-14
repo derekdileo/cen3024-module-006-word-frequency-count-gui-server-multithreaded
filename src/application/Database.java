@@ -110,7 +110,7 @@ public class Database {
 	 * @param word is the target key whose frequency is to be updated
 	 * @param frequency is the new frequency of occurrence of the word in our program 
 	 * @throws Exception */
-	public static void update(String word, int frequency) throws Exception {
+	public static void update(String word, int frequency) {
 		try {
 			conn = getConnection();
 			String update = "UPDATE words SET frequency = " + frequency + " WHERE word  = '" + word + "'";

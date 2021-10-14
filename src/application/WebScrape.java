@@ -97,11 +97,9 @@ public class WebScrape {
 					// If word already in database...
 					if (frequency != -1) {
 						// Increment the frequency
-						System.out.println("Word: " + word + ", frequency: " + frequency);
 						Database.update(word, ++frequency);
 					} else {
 						// Add to database
-						System.out.println("New word!");
 						Database.post(word, 1);
 					}
 					
