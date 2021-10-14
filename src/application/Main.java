@@ -136,24 +136,19 @@ public class Main extends Application {
 		
 	}
 
+	/**
+	 * Method calls QuestionBox to ask user for a website to parse as well as
+	 * where the parsing should start and end.
+	 * @return a String array with responses to pass to WebScrape.parseSite() Method.
+	 */
 	private String[] processUserInput() {
-		// Gather URL from user (or set to default for EAP The Raven) 
-		
+		// Create string array to hold QuestionBox responses (site, startPoint, endPoint).
 		String[] responses = new String[3];
 		
+		// Gather responses and return to caller
 		responses = QuestionBox.display(questionBoxPrompts, defaultEntries, appIntro);
-		
-		
-		// If userWebsite is not EAP, call overloaded QB.display which has
-		// validation to not allow a blank response. 
-//		if (userWebsite.equals(defaultWebsite)) {
-//			sourceHead = QuestionBox.display(startTitle, startInstruction, defaultSourceHead);
-//			sourceEnd = QuestionBox.display(endTitle, endPrompt, defaultSourceEnd);			
-//		} else {
-//			sourceHead = QuestionBox.display(startTitle, startInstruction);
-//			sourceEnd = QuestionBox.display(endTitle, endPrompt);			
-//		}
 		return responses;
+		
 	}
 	
 	/**
