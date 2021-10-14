@@ -95,7 +95,7 @@
          <content>
             <TextArea fx:id="textAreaAllResults" editable="false" prefHeight="338.0" prefWidth="793.0" style="-fx-background-color: #f4f4f4; -fx-border-color: transparent; -fx-padding: 0,0,50;" wrapText="true">
                <font>
-                  <Font name="Courier New" size="13.0" />
+                  <Font name="Courier New" size="14.0" />
                </font></TextArea>
          </content>
       </ScrollPane>
