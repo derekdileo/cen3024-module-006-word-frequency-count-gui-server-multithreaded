@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  * @author derekdileo */
 public class Main extends Application {
 	
-	// Variables for QuestionBox calls
+	// Variables for call to QuestionBox.display()
 	protected static boolean defaultSite = false;
 	protected static String userWebsite = null;
 	protected static String sourceHead = null;
@@ -23,21 +23,24 @@ public class Main extends Application {
 	private String defaultWebsite =  "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
 	private String defaultSourceHead = "<h1>The Raven</h1>";
 	private String defaultSourceEnd = "<!--end chapter-->";
-	private String[] defaultEntries = {defaultWebsite, defaultSourceHead, defaultSourceEnd};
-	
-	
 	private String title = "Word Frequency Counter";
 	private String instruction = "Enter a URL to count frequency of each word.";
+	private String siteLabel = "Website to Parse";
 	private String sitePlaceholder = "Enter a website to evaluate";
+	private String startLabel = "Where to start.";
 	private String startPlaceholder= "Text from first line";
+	private String endLabel = "Where to finish.";
 	private String endPlaceholder = "Text from last line.";
-	private String[] questionBoxPrompts = {title, instruction, sitePlaceholder, startPlaceholder, endPlaceholder};
+	private String[] defaultEntries = {defaultWebsite, defaultSourceHead, defaultSourceEnd};
+	private String[] questionBoxPrompts = {title, instruction, siteLabel, sitePlaceholder, startLabel, startPlaceholder, endLabel, endPlaceholder};
 	
+	// QuestionBox.display now accepts a third string array to pass to an AlertBox when it launches.
+	// This enables us to provide some app instructions to the user. 
+	private String appIntroTitle = "Welcome to Word Frequency Counter";
+	private String appIntroMessage = "For best results, right-click and inspect the text you'd like to parse. \nThen, copy and paste the elements into the start and finish boxes.";
+	private String[] appIntro = {appIntroTitle, appIntroMessage};
 	
-//	private String startInstruction = "Please paste some text from the first line of text to be evaluated.";
-//	private String endPrompt = "Please paste some text from the last line of text to be evaluated.";
-//	private String startTitle = "Start of Processing?";
-//	private String endTitle = "End of Processing?";
+	// String array to hold QuestionBox.display() responses.
 	protected static String[] userResponses;
 	
 	// Local Lists and Maps to hold return values from Class methods
@@ -138,7 +141,7 @@ public class Main extends Application {
 		
 		String[] responses = new String[3];
 		
-		responses = QuestionBox.display(questionBoxPrompts, defaultEntries);
+		responses = QuestionBox.display(questionBoxPrompts, defaultEntries, appIntro);
 		
 		
 		// If userWebsite is not EAP, call overloaded QB.display which has
@@ -245,7 +248,6 @@ public class Main extends Application {
 	private static String columnOne = "word varchar(255) NOT NULL UNIQUE";
 	private static String columnTwo = "frequency int NOT NULL";
 	private static String primaryKey = "PRIMARY KEY(word)";
-
 	
 	/** Method uses ConfirmBox class to confirm if user wants to quit. */
 	protected static void closeProgram() {

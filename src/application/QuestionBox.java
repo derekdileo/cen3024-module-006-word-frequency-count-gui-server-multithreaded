@@ -23,21 +23,23 @@ import javafx.stage.Stage;
 public class QuestionBox {
 
     // Define String variable to be returned to caller
-    static String userSite;
-    static String startAt;
-    static String endAt;
-    static String[] responses = new String[3];
+//    static String userSite;
+//    static String startAt;
+//    static String endAt;
+    protected static String[] responses = new String[3];
     
     /** Method that asks the user a question and returns a String of either their response or, if left
      * blank, a default response which in passed from the caller. 
-     * @param title is a String at the top (title) of the pop-up window.
-     * @param instruction is the question to ask the user and is displayed via Label class.
-     * @param defaultValue is the value to return if user doesn't enter a response.
-     * @return String value of the user's response to the question.
+     * @param prompts is a String array that contains the all of the text variables for the window (title, heading, labels, etc). 
+     * @param defaultEntries direct the app to parse EAP's The Raven (per professor's original instructions).
+     * @return String array of the user's responses.
      * @author Derek DiLeo */
-    public static String[] display(String[] prompts, String[] defaultEntries) {
-        System.out.println("QuestionBox.display(3) called!");
-    	Stage window = new Stage(); // window is easier to grasp than 'stage'
+    public static String[] display(String[] prompts, String[] defaultEntries, String[] alertBox) {
+
+    	// Provide instructions to the user
+        AlertBox.display(alertBox[0], alertBox[1]);
+        
+        Stage window = new Stage(); // window is easier to grasp than 'stage'
 
         // Create StackPanes (two needed for CSS to function correctly)
         StackPane qBoxStackPane1 = new StackPane();
@@ -63,19 +65,19 @@ public class QuestionBox {
         
         // Create text fields for user input
         Label siteLabel = new Label();
-        siteLabel.setText("Website to Parse");
+        siteLabel.setText(prompts[2]);
         TextField siteField = new TextField();
-        siteField.setPromptText(prompts[2]);
+        siteField.setPromptText(prompts[3]);
         
         Label startLabel = new Label();
-        startLabel.setText("Where to start.");
+        startLabel.setText(prompts[4]);
         TextField startField = new TextField();
-        startField.setPromptText(prompts[3]);
+        startField.setPromptText(prompts[5]);
         
         Label endLabel = new Label();
-        endLabel.setText("Where to finish.");
+        endLabel.setText(prompts[6]);
         TextField endField = new TextField();
-        endField.setPromptText(prompts[4]);
+        endField.setPromptText(prompts[7]);
 
         // Create two buttons and set their behavior
         Button submitButton = new Button("Submit");
@@ -150,14 +152,17 @@ public class QuestionBox {
         return responses;
     }
   
-    
+    /**
+     * Method to validate URL entered by user.
+     * @param urlString is the URL passed into QuestionBox by user.
+     * @return boolean value of URL validity: valid = true. */
     public static boolean isValidURL(String urlString) {
     	try {
     		URL url = new URL(urlString);
     		url.toURI();
     		return true;
     	} catch (Exception e) {
-    		
+    		System.out.println("Invalid URL passed to QuestionBox!");
     		return false;
     	}
     	
