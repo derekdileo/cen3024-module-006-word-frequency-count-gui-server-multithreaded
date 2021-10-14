@@ -3,6 +3,7 @@ package application;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /** 
  * The Database class will be home to all methods which  
@@ -67,13 +68,13 @@ public class Database {
 	 * Method creates the standard words table within the database (if it does not exist already).
 	 * @param primaryKey is the desired primaryKey and any additional information which can be appended to the end of the PreparedStatement
 	 * @throws Exception */
-	public static void createWordsTable() throws Exception {
+	public static void createWordsTable(String tableName) throws Exception {
 		try {
 			// Establish a connection
 			conn = getConnection();
 			
 			// Create PreparedStatement and Execute
-			String create = "CREATE TABLE IF NOT EXISTS words (word varchar(255) NOT NULL UNIQUE, frequency int NOT NULL, PRIMARY KEY(word))";
+			String create = "CREATE TABLE IF NOT EXISTS " + tableName + " (word varchar(255) NOT NULL UNIQUE, frequency int NOT NULL, PRIMARY KEY(word))";
 			PreparedStatement pstmt = conn.prepareStatement(create);
  		 	pstmt.executeUpdate();
  		 	
@@ -112,6 +113,42 @@ public class Database {
 		}
 		
 	}
+	
+	/**
+	 * Method to check databse 
+	 * @param word
+	 * @return
+	 */
+	public static int queryFrequency(String word) {
+		
+		try {
+			conn = getConnection();
+			String post = "SELECT frequency FROM words WHERE word = '" + word + "'";
+			PreparedStatement pstmt = conn.prepareStatement(post);
+			ResultSet rs = pstmt.executeQuery();
+			int frequency = 0;
+			if(rs.next()) {
+				frequency = rs.getInt(1);
+				System.out.println("Frequency: " + frequency);
+				conn.close();
+				return frequency;
+			} else {
+				frequency = -1;
+				conn.close();
+				System.out.println("Error: " + word + " is not in database...");
+				return frequency;
+			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			System.out.println("The Method: queryFrequency("+word+") is complete!");
+		}
+		return -1;
+		
+	}
+	
+	
 	
 	/**
 	 * Method posts (inserts) desired word and frequency values into the words table
@@ -182,8 +219,20 @@ public class Database {
 	
 	public static void main(String[] args) {
 		try {
-			Database.deleteTable("words");
-			Database.createTable("words", columnOne, columnTwo, primaryKey);
+			deleteTable("words");
+			createTable("words", columnOne, columnTwo, primaryKey);
+			// Should pass and return 2
+			post("The", 2);
+			int freq = queryFrequency("The");
+			System.out.println(freq);
+			
+			// Should fail and return -1
+			post("He", 2);
+			freq = queryFrequency("Alas");
+			System.out.println(freq);
+			deleteTable("words");
+			createWordsTable("words");
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

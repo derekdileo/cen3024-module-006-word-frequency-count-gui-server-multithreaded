@@ -78,23 +78,17 @@ public class WebScrape {
 			if (word.toString() != "" && word.toString() != " " && !word.toString().contains("mdash")
 					&& !word.toString().contains("	")) {
 				
-				if (wordFrequency.containsKey(word)) { // If word already in HashMap
-					// Get the current word frequency count
-					int n = wordFrequency.get(word);
-
-					// Increment, then replace count in HashMap
-					wordFrequency.put(word, ++n);
-					
-					// Increment, then replace count in database
-					Database.update(word, n);
-					
-				}
-
-				// Otherwise, place word in Hashmap (and database), set count to 1
-				else {
-					wordFrequency.put(word, 1);
+				int frequency = Database.queryFrequency(word);
+				
+				// If word already in database...
+				if (frequency != -1) {
+					// Increment the frequency
+					Database.update(word, ++frequency); 
+				} else {
+					// Add to database
 					Database.post(word, 1);
 				}
+				
 			}
 		}
 		
