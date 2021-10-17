@@ -120,13 +120,13 @@ class WordManagerTest {
 		}
 		
 		@DisplayName("CSV Source Case - Frequency should match the required Format")
-		 @ParameterizedTest
-	        @CsvSource({"1", "1", "1"})
-	        public void shouldTestPhoneNumberFormatUsingCSVSource(String frequency) {
-	            wordManager.addWord("Joy", Integer.parseInt(frequency));
-	            assertFalse(wordManager.getAllWords().isEmpty());
-	            assertEquals(1, wordManager.getAllWords().size());
-	        }
+		@ParameterizedTest
+        @CsvSource({"1", "1", "1"})
+        public void shouldTestPhoneNumberFormatUsingCSVSource(String frequency) {
+            wordManager.addWord("Joy", Integer.parseInt(frequency));
+            assertFalse(wordManager.getAllWords().isEmpty());
+            assertEquals(1, wordManager.getAllWords().size());
+        }
 
         @DisplayName("CSV File Source Case - Phone Number should match the required Format")
         @ParameterizedTest

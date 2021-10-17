@@ -106,6 +106,24 @@ public class Database {
 	}
 	
 	/**
+	 * Method deletes desired word and frequency values from the words table
+	 * @param word is the desired word to be removed from the words table
+	 * @throws Exception */
+	public static void delete(String word) throws Exception {
+		try {
+			conn = getConnection();
+			String post = "DELETE FROM words WHERE word = '" + word + "'";
+			PreparedStatement pstmt = conn.prepareStatement(post);
+			pstmt.executeUpdate();
+			conn.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} 
+		
+	}
+	
+	/**
 	 * Method updates the frequency (occurrences) of the selected word in the table
 	 * @param word is the target key whose frequency is to be updated
 	 * @param frequency is the new frequency of occurrence of the word in our program 
