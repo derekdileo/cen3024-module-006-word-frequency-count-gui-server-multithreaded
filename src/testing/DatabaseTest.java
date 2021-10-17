@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -107,6 +108,24 @@ class DatabaseTest {
 				e.printStackTrace();
 			}
 		}
+		
+        @DisplayName("CSV File Source Case -  Number should match the required Format")
+        @ParameterizedTest
+        @CsvFileSource(resources = "resources/data.csv")
+        public void shouldTestPhoneNumberFormatUsingCSVFileSource(String frequency) {
+            try {
+				String word = "Jockey";
+            	Database.post(word, Integer.parseInt(frequency));
+				assertEquals(1, Database.queryFrequency(word));
+				Database.delete("Jockey");
+				assertEquals(-1, Database.queryFrequency(word));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        } 
+		
 	}
 	
 	@DisplayName("Method Source Case - Search for word not in database")
