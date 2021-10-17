@@ -10,28 +10,58 @@ public class Word implements Comparable<Word> {
 	private int frequency;
 
 	// Constructor
-	public Word(String key, int value) {
+	public Word(String word, int frequency) {
 		super();
-		this.word = key;
-		this.frequency = value;
+		this.word = word;
+		if (frequency > 0) {
+			this.frequency = frequency;
+		}
 	}
 	
-	// Getters
-	public String getKey() {
+	// Getters & Setters
+	public String getWord() {
 		return word;
 	}
 
-	public int getValue() {
+	public int getFrequency() {
 		return frequency;
 	}
+	
+	public void setWord(String word) {
+		this.word = word;
+	}
+	
+	public void setFrequency(int frequency) {
+		if(frequency > 0) {
+			this.frequency = frequency;
+		}
+	}
+	
+	public void validateWord() {
+		if(this.word.isEmpty()) {
+			throw new RuntimeException("Word Cannot be null or empty");
+		}
+	}
 
+	public void validateFrequency() {
+		if(this.frequency <= 0) {
+			throw new RuntimeException("Frequency Cannot be negative");
+		}
+		String str = "" + frequency;
+
+		if(!str.matches("\\d")) {
+			throw new RuntimeException("Frequency should Contain only digits");
+		}
+		
+ 	}
+	
 	/**Implemented Method that allows Word objects to be compared
 	 * in order to allow ArrayList(of Word) to be sorted by value (frequency). */
 	@Override
 	public int compareTo(Word word) {
-		return this.frequency - word.getValue();
+		return this.frequency - word.getFrequency();
 	}
-
+	
 	/** Method which takes index value (in sorted list) for final output of values to console and GUI
 	 * @param index is index location in ArrayList(of Word) sorted by frequency (value)  
 	 * @return returns a String to be printed to console and GUI */

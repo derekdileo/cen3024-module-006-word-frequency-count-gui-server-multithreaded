@@ -21,7 +21,7 @@ public class Main extends Application {
 	private String defaultWebsite =  "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
 	private String defaultSourceHead = "<h1>The Raven</h1>";
 	private String defaultSourceEnd = "<!--end chapter-->";
-	private String title = "Word Frequency Counter";
+	private String title = "Word Frequency Analyzer";
 	private String instruction = "Enter a URL to count frequency of each word.";
 	private String siteLabel = "Website to Parse";
 	private String sitePlaceholder = "Enter a website to evaluate";

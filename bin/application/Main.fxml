@@ -94,9 +94,9 @@
       </HBox>
    </bottom>
    <center>
-      <Label fx:id="labelText" styleClass="labelText" wrapText="true" BorderPane.alignment="CENTER">
+      <Label id="top-ten-main" fx:id="labelText" styleClass="labelText" wrapText="true" BorderPane.alignment="CENTER">
          <font>
-            <Font name="Courier New" size="14.0" />
+            <Font name="Courier New" size="16.0" />
          </font></Label>
    </center>
 </BorderPane>

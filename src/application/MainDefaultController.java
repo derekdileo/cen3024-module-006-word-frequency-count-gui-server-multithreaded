@@ -107,7 +107,7 @@ public class MainDefaultController implements Initializable {
 		try {
 			Parent allResultsViewParent = FXMLLoader.load(getClass().getResource("AllResultsDefault.fxml"));
 			Scene allResultsViewScene = new Scene(allResultsViewParent);
-			
+			allResultsViewScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			// Get the Stage information
 			Stage window = (Stage)(((Node) event.getSource()).getScene().getWindow());
 			window.setScene(allResultsViewScene);

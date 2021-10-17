@@ -10,6 +10,10 @@ import org.junit.jupiter.api.Test;
 
 import application.Word;
 
+/**
+ * Word class was created before a database was implemented and, although it is no longer used, 
+ * creating tests and validation just for practice. 
+ * @author derekdileo */
 class WordTest {
 
 	private static Word wordTest;
@@ -40,8 +44,8 @@ class WordTest {
 	@Test
 	void toString_Test() {
 		int index = 0;
-		String word = wordTest.getKey();
-		int frequency = wordTest.getValue();
+		String word = wordTest.getWord();
+		int frequency = wordTest.getFrequency();
 		
 		String strToString = wordTest.toString(index);
 		String strCode = "\n" + (index + 1) + ") Word: " + word + "\t\tFrequency: " + frequency;
