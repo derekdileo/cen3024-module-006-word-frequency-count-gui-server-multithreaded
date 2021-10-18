@@ -4,8 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import application.Word;
@@ -16,14 +18,12 @@ import application.Word;
  * @author derekdileo */
 class WordTest {
 
-	private static Word wordTest;
-	//private static Word wordTest2;
+	public static Word wordTest;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		System.out.println("setUpBeforeClass()... (runs once)");
 		wordTest = new Word("testing", 5);
-		//wordTest2 = new Word("testing", 5);
 	}
 
 	@AfterAll
@@ -42,19 +42,27 @@ class WordTest {
 	}
 
 	@Test
-	void toString_Test() {
+	@DisplayName("Should test wordTest.toString(0) method against strCode")
+	void wordTestingToStringCheck() {
 		int index = 0;
-		String word = wordTest.getWord();
-		int frequency = wordTest.getFrequency();
-		
-		String strToString = wordTest.toString(index);
-		String strCode = "\n" + (index + 1) + ") Word: " + word + "\t\tFrequency: " + frequency;
-		
-		System.out.println(strToString);
-		System.out.println(strCode);
-		
-		assertEquals(strToString, strCode);
+		String strCode = "\n " + (index + 1) + ") Word: " + wordTest.getWord() + "\t\t\tFrequency: " + wordTest.getFrequency();
+		assertEquals(strCode, wordTest.toString(0));
 	}
+	
+	@Test
+	@DisplayName("Should check all items in the list (just for practice)")
+	void shouldCheckAllItemsInTheList() {
+		int[] numbers = {2, 3, 4, 5, 6, 7};
+		
+		Assertions.assertAll(() -> assertEquals(2, numbers[0]), 
+				() -> assertEquals(3, numbers[1]), 
+				() -> assertEquals(4, numbers[2]), 
+				() -> assertEquals(5, numbers[3]), 
+				() -> assertEquals(6, numbers[4]), 
+				() -> assertEquals(7, numbers[5]));
+		
+	}
+	
 //
 //	@Test
 //	void compareTo_Test(Word wordTest2) {

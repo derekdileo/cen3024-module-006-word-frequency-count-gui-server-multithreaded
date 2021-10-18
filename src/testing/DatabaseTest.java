@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -138,6 +139,19 @@ class DatabaseTest {
 		
 	private static List<String> wordList() {
 		return Arrays.asList("rice", "cake", "wife", "lake", "twice", "baked");
+	}
+	
+	@Test
+	@DisplayName("Should check all items in the list (just for practice)")
+	void shouldCheckAllItemsInTheList() {
+		int[] numbers = {2, 3, 4, 5, 6, 7};
+		
+		Assertions.assertAll(() -> assertEquals(2, numbers[0]), 
+				() -> assertEquals(3, numbers[1]), 
+				() -> assertEquals(4, numbers[2]), 
+				() -> assertEquals(5, numbers[3]), 
+				() -> assertEquals(6, numbers[4]), 
+				() -> assertEquals(7, numbers[5]));
 	}
 
 	@AfterEach
