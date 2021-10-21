@@ -3,6 +3,8 @@
 ## This Java program scrapes [The Raven by Edgar Allen Poe eBook on Project Gutenberg's website] (https://www.gutenberg.org/files/1065/1065-h/1065-h.htm), 
 tracks each word and its occurrences and then returns the top 10 occurrences to a JavaFX GUI. 
 
+[Link to video demo] (https://vimeo.com/636527956)
+
 ###### This is done in the following steps:
 
 - Copy InputStream (from URL) to a text file in the project directory under src/resources/doc.
