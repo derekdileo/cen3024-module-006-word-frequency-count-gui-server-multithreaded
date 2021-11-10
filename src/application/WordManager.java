@@ -4,6 +4,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+
+/** The WordManager Class was created strictly to following along with a JUnit tutorial and uses the Word Class which has not
+ *  been necessary since this application began using a database.
+ * @author derekdileo */
 public class WordManager {
 	
 	Map<String, Word> wordList = new ConcurrentHashMap<String, Word>();

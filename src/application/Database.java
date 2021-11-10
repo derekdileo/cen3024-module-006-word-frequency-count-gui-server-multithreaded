@@ -5,19 +5,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-/** 
- * The Database class will be home to all methods which  
- * pertain to the local MySQL database for this project.
- * @author derekdileo */
+/** The Database class will be home to all methods which  
+ *  pertain to the local MySQL database for this project.
+ *  @author derekdileo */
 public class Database {
 
-	// Declare variables
+	// Declare variable
 	protected static Connection conn;
 	
-	/** 
-	 * Method establishes a connection with local MySQL database
-	 * @return returns a database Connection to the caller
-	 * @throws Exception */
+	/** Method establishes a connection with local MySQL database
+	 *  @return returns a database Connection to the caller
+	 *  @throws Exception */
 	public static Connection getConnection() throws Exception {
 		try {
 			String driver = "com.mysql.cj.jdbc.Driver";
@@ -36,10 +34,10 @@ public class Database {
 		return null;
 	}
 	
-	/**
-	 * Method creates the standard words table within the database (if it does not exist already).
-	 * @param primaryKey is the desired primaryKey and any additional information which can be appended to the end of the PreparedStatement
-	 * @throws Exception */
+	/** Method creates the standard words table within the database (if it does not exist already).
+	 *  @param tableName is the desired name for database table to be created and is only used for testing purposes- 
+	 *  otherwise, this would be hard-coded.
+	 *  @throws Exception */
 	public static void createWordsTable(String tableName) throws Exception {
 		try {
 			// Establish a connection
@@ -61,10 +59,9 @@ public class Database {
 		
 	}
 	
-	/**
-	 * Method drops a table within the database (if it exists).
-	 * @param tableName is the name of the table to be deleted (if it exists).
-	 * @throws Exception */
+	/** Method drops a table within the database (if it exists).
+	 *  @param tableName is the name of the table to be deleted.
+	 *  @throws Exception */
 	public static void deleteTable(String tableName) throws Exception {
 		try {
 			// Establish a connection
@@ -86,11 +83,10 @@ public class Database {
 		
 	}
 	
-	/**
-	 * Method posts (inserts) desired word and frequency values into the words table
-	 * @param word is the desired word to be posted to the words table
-	 * @param frequency is the frequency of occurrence of the word in our program 
-	 * @throws Exception */
+	/** Method posts (inserts) desired word and frequency values into the words table
+	 *  @param word is the desired word to be posted to the words table
+	 *  @param frequency is the frequency of occurrence of the word in our program 
+	 *  @throws Exception */
 	public static void post(String word, int frequency) throws Exception {
 		try {
 			conn = getConnection();
@@ -105,10 +101,9 @@ public class Database {
 		
 	}
 	
-	/**
-	 * Method deletes desired word and frequency values from the words table
-	 * @param word is the desired word to be removed from the words table
-	 * @throws Exception */
+	/** Method deletes desired word and frequency values from the words table
+	 *  @param word is the desired word to be removed from the words table
+	 *  @throws Exception */
 	public static void delete(String word) throws Exception {
 		try {
 			conn = getConnection();
@@ -123,11 +118,10 @@ public class Database {
 		
 	}
 	
-	/**
-	 * Method updates the frequency (occurrences) of the selected word in the table
-	 * @param word is the target key whose frequency is to be updated
-	 * @param frequency is the new frequency of occurrence of the word in our program 
-	 * @throws Exception */
+	/** Method updates the frequency (occurrences) of the selected word in the table
+	 *  @param word is the target key whose frequency is to be updated
+	 *  @param frequency is the new frequency of occurrence of the word in our program 
+	 *  @throws Exception */
 	public static void update(String word, int frequency) {
 		try {
 			conn = getConnection();
@@ -142,11 +136,10 @@ public class Database {
 		
 	}
 	
-	/**
-	 * Method to query for a word and return its frequency (if present)- 
-	 * otherwise, frequency is set to -1. 
-	 * @param word is the word to search for in the database
-	 * @return frequency of the word (or -1 if word not present in db) */
+	/** Method to query for a word and return its frequency (if present)- 
+	 *  otherwise, frequency is set to -1. 
+	 *  @param word is the word to search for in the database.
+	 *  @return frequency of the word (or -1 if word not present in db) */
 	public static int queryFrequency(String word) {
 		try {
 			conn = getConnection();
@@ -171,10 +164,8 @@ public class Database {
 		return -1; // if not successful
 	}
 	
-	/**
-	 * Method that queries database for * FROM words ORDER BY 
-	 * frequency DESC and returns a ResultSet. 
-	 * @return ResultSet of query SELECT * FROM words ORDER BY frequency DESC */
+	/** Method that queries database for * FROM words, orders by frequency DESC and returns a ResultSet. 
+	 *  @return ResultSet of query SELECT * FROM words ORDER BY frequency DESC */
 	public static ResultSet getResults() {
 		try {
 			conn = getConnection();
@@ -192,8 +183,7 @@ public class Database {
 		return null; // if not successful
 	}
 	
-	/**
-	 * Used for testing while coding and will be deleted later.
+	/** Used for testing while coding and will be deleted later.
 	 * @param args */
 	public static void main(String[] args) {
 		try {

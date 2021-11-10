@@ -18,23 +18,21 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-/** ConfirmBox class utilizes an internal display method to confirm a user action
- * @author Derek DiLeo*/
+/** QuestionBox class utilizes an internal display method to ask a user to input some 
+ *  data pertaining to the web text to be parsed and returns as a String array
+ *  @author Derek DiLeo*/
 public class QuestionBox {
 
-    // Define String variable to be returned to caller
-//    static String userSite;
-//    static String startAt;
-//    static String endAt;
+    // Define String array to be returned to caller
     protected static String[] responses = new String[3];
     
     /** Method that asks the user a question and returns a String of either their response or, if left
-     * blank, a default response which in passed from the caller. 
-     * @param prompts is a String array that contains the all of the text variables for the window (title, heading, labels, etc). 
-     * @param defaultEntries direct the app to parse EAP's The Raven (per professor's original instructions).
-     * @param alertBox holds title and message Strings to provide user with some instructions at launch.
-     * @return String array of the user's responses.
-     * @author Derek DiLeo */
+     *  blank, a default response which in passed from the caller. 
+     *  @param prompts is a String array that contains the all of the text variables for the window (title, heading, labels, etc). 
+     *  @param defaultEntries direct the app to parse EAP's The Raven (per professor's original instructions).
+     *  @param alertBox holds title and message Strings to provide user with some instructions at launch.
+     *  @return String array of the user's responses.
+     *  @author Derek DiLeo */
     public static String[] display(String[] prompts, String[] defaultEntries, String[] alertBox) {
 
     	// Provide instructions to the user
@@ -161,10 +159,9 @@ public class QuestionBox {
         return responses;
     }
   
-    /**
-     * Method to validate URL entered by user.
-     * @param urlString is the URL passed into QuestionBox by user.
-     * @return boolean value of URL validity: valid = true. */
+    /** Method to validate URL entered by user.
+     *  @param urlString is the URL passed into QuestionBox by user.
+     *  @return boolean value of URL validity: valid = true. */
     public static boolean isValidURL(String urlString) {
     	try {
     		URL url = new URL(urlString);
@@ -177,11 +174,10 @@ public class QuestionBox {
     	
     }
     
-    /**
-     * Method to ensure start and end fields are not left blank.
-     * @param start is the start field passed into QuestionBox by user.
-     * @param end is the end field passed into QuestionBox by user.
-     * @return boolean if both are not left blank. */
+    /** Method to validate that start and end fields are not left blank.
+     *  @param start is the start field passed into QuestionBox by user.
+     *  @param end is the end field passed into QuestionBox by user.
+     *  @return boolean if both are not left blank. */
     public static boolean areValidEntries(String start, String end) {
     	if (!start.equals("") && !end.equals("")) {
     		return true;

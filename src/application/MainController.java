@@ -22,8 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-/**
- * Controller class for Main.fxml which calls 
+/** Controller class for Main.fxml which calls 
  * initialize() prior to launching GUI. 
  * @author Derek DiLeo */
 public class MainController implements Initializable {
@@ -45,10 +44,9 @@ public class MainController implements Initializable {
 	// URL of GitHub repo
 	private String aboutSite = "https://github.com/derekdileo/cen3024-module-006-word-frequency-count-gui";
 
-	/**
-	 * Method runs prior to GUI being displayed and handles processing 
-	 * of text file created by WebScrapeToFile.createFile(). 
-	 * @author Derek DiLeo */
+	/** Method runs prior to GUI being displayed and calls 'Main.sbAllString' 
+	 *  String built in MainController to be pushed to GUI 
+	 *  @author Derek DiLeo */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -56,7 +54,7 @@ public class MainController implements Initializable {
 		String s = Character.toString((char) copyrightSymbol);
 		copyrightLabel.setText(s);
 		
-		// Display Raven image (if default website chosen)
+		// Display Raven image (if Raven website chosen)
 		if(Main.defaultSite) {
 			Image imageFile = new Image("/resources/img/image.png");
 			ImageView image = new ImageView();
@@ -73,16 +71,14 @@ public class MainController implements Initializable {
 		
 	}
 	
-	/**
-	 * Method to call Main.closeProgram() when File, Close clicked.
-	 * @param event when user clicks File, Close */
+	/** Method to call Main.closeProgram() when File, Close clicked.
+	 *  @param event when user clicks File, Close */
 	@FXML public void handleFileClose(ActionEvent event) {
 		Main.closeProgram();
 	}
 
-	/**
-	 * Method to launch github repo page on default browser (send to readme file, once typed).
-	 * @param event when user clicks Help, About */
+	/** Method to launch github repo page on default browser.
+	 *  @param event when user clicks Help, About */
 	@FXML public void handleHelpAbout(ActionEvent event) {
 		try {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
@@ -91,11 +87,11 @@ public class MainController implements Initializable {
 			} catch (Exception e) {
 			  e.printStackTrace();
 			}
+		
 	}
 
-	/**
-	 * Method launches website where poem was sourced.
-	 * @param event when user clicks on "Source" hyperlink in footer. */
+	/** Method launches website where poem was sourced.
+	 *  @param event when user clicks on "Source" hyperlink in footer. */
 	@FXML public void handleHyperlink(ActionEvent event) {
 		try {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
@@ -106,9 +102,8 @@ public class MainController implements Initializable {
 			}
 	}
 
-	/**
-	 * Method to switch the Scene to AllResults.fxml
-	 * @param event when user clicks "Show All Results" button. */
+	/** Method to switch the Scene to AllResults.fxml
+	 *  @param event when user clicks "Show All Results" button. */
 	@FXML public void handleShowHideButton(ActionEvent event) {
 		
 		try {
@@ -125,4 +120,5 @@ public class MainController implements Initializable {
 		}
 		
 	}
+	
 }

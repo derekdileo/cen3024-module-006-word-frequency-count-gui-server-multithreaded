@@ -23,8 +23,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-/**
- * Controller class for AllResults.fxml which calls 
+/** Controller class for AllResultsDefault.fxml which calls 
  * initialize() prior to launching GUI. 
  * @author Derek DiLeo */
 public class AllResultsDefaultController implements Initializable  {
@@ -46,10 +45,9 @@ public class AllResultsDefaultController implements Initializable  {
 	// URL of GitHub repo
 	private String aboutSite = "https://github.com/derekdileo/cen3024-module-006-word-frequency-count-gui";
 	
-	/**
-	 * Method runs prior to GUI being displayed and calls 'sbAll' 
-	 * String built in MainController to be pushed to GUI 
-	 * @author Derek DiLeo */
+	/** Method runs prior to GUI being displayed and calls 'Main.sbAllString' 
+	 *  String built in MainController to be pushed to GUI 
+	 *  @author Derek DiLeo */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Copyright symbol for GUI footer
@@ -60,19 +58,14 @@ public class AllResultsDefaultController implements Initializable  {
 		textAreaAllResults.setText(Main.sbAllString);
 	}
 	
-	
-	
-	/**
-	 * Method to call Main.closeProgram() when File, Close clicked.
-	 * @param event when user clicks File, Close */
+	/** Method to call Main.closeProgram() when File, Close clicked.
+	 *  @param event when user clicks File, Close */
 	@FXML public void handleFileClose(ActionEvent event) {
 		Main.closeProgram();
 	}
 
-
-	/**
-	 * Method to launch github repo page on default browser (send to readme file, once typed).
-	 * @param event when user clicks Help, About */
+	/** Method to launch github repo page on default browser.
+	 *  @param event when user clicks Help, About */
 	@FXML public void handleHelpAbout(ActionEvent event) {
 		try {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
@@ -81,11 +74,11 @@ public class AllResultsDefaultController implements Initializable  {
 			} catch (Exception e) {
 			  e.printStackTrace();
 			}
+		
 	}
 
-	/**
-	 * Method launches website where poem was sourced.
-	 * @param event when user clicks on "Source" hyperlink in footer. */
+	/** Method launches website where text was sourced.
+	 *  @param event when user clicks on "Source" hyperlink in footer. */
 	@FXML public void handleHyperlink(ActionEvent event) {
 		try {
 			  Desktop desktop = java.awt.Desktop.getDesktop();
@@ -96,9 +89,8 @@ public class AllResultsDefaultController implements Initializable  {
 			}
 	}
 
-	/**
-	 * When this method is called, it will change the Scene to Main.fxml
-	 *	 * @param event when user clicks "Show Top Ten Results" button. */
+	/** When this method is called, it will change the Scene to MainDefault.fxml
+	 *  @param event when user clicks "Show Top Ten Results" button. */
 	@FXML public void handleShowHideButton(ActionEvent event) {
 		try {
 			Parent mainViewParent = FXMLLoader.load(getClass().getResource("MainDefault.fxml"));

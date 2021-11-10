@@ -2,6 +2,7 @@ package testing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -33,11 +35,19 @@ class DatabaseTest {
 		System.out.println("Created a words table and posted 'The', 5.");
 	}
 
+	// TestInfo testInfo.getDisplayName() is a handy trick. 
+	
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp(TestInfo testInfo) throws Exception {
 		Database.update("The", 5);
-		System.out.println("Frequency of 'The' updated to 5");
+		System.out.println("beforeeach: " + testInfo.getDisplayName() + " in " + this + ": Frequency of 'The' updated to 5");
 	}
+	
+	
+	
+	
+	
+	
 	
 	@DisplayName("Frequency should be 5")
 	@Test
@@ -163,5 +173,45 @@ class DatabaseTest {
 		Database.deleteTable("words");
 		Database.createWordsTable("words");
 	}
+	
+	
+	// Extra Tests
+	// newApproach
+	@Test
+	void newApproach() {
+		NumberFormatException expected = assertThrows(NumberFormatException.class, () -> {
+			Integer.parseInt("foo");
+		});
+		assertEquals("For input string: \"foo\"", expected.getMessage());
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	oldSchoolApproaches
+//		@Test(expected = NumberFormatException.class)
+//		public void annotationParameterApproach() {
+//			Integer.parseInt("foo");
+//		}
+//		
+//		@Rule
+//		public ExpectedException thrown = ExpectedException.none();
+//		
+//		@Test
+//		public void ruleBasedApproach() {
+//			thrown.expect(NumberFormatException.class);
+//			thrown.expectMessage("For input string: \"foo\"");
+//			
+//			Integer.parseInt("foo");
+//		}
+//		
+	
 	
 }

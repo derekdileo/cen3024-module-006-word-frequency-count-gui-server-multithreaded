@@ -60,7 +60,6 @@ class WordTest {
 				() -> assertEquals(5, numbers[3]), 
 				() -> assertEquals(6, numbers[4]), 
 				() -> assertEquals(7, numbers[5]));
-		
 	}
 	
 //

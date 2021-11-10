@@ -10,15 +10,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-/** AlertBox class utilizes an internal display method to alert user of something
- * @author Derek DiLeo*/
+/** AlertBox class utilizes its display method to inform the user of something and persists until closed.
+ * @author Derek DiLeo */
 public class AlertBox {
 
-    /** display() method displays the ConfirmBox to the user
+    /** display() method displays the AlertBox to the user
      * @param title title of the pop-up window to be displayed
      * @param message message displayed in the pop-up window via Label class
-     * @author Derek DiLeo
-     */
+     * @author Derek DiLeo  */
     public static void display(String title, String message) {
         Stage window = new Stage(); // window is easier to grasp than 'stage'
 

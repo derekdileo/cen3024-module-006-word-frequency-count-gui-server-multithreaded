@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 /** Application scrapes text from a website and displays top10 
  *  (and all) word occurrences to a JavaFX GUI.
- * @author derekdileo */
+ *  @author derekdileo */
 public class Main extends Application {
 	
 	// Variables for call to QuestionBox.display()
@@ -53,7 +53,7 @@ public class Main extends Application {
 	protected static String sbAllString;
 	
 	/** Main method calls launch() to start JavaFX GUI.
-	 * @param args mandatory parameters for command line method call */
+	 *  @param args mandatory parameters for command line method call */
 	public static void main(String[] args) {
 		// Create wordsTable if it doesn't exist
 		try {
@@ -68,7 +68,7 @@ public class Main extends Application {
 	
 	// Declare stage (window) outside of start() method
 	// so it is accessible to closeProgram() method
-	static Stage window;
+	protected static Stage window;
 	
 	/** The start method (which is called on the JavaFX Application Thread) 
 	 * is the entry point for this application and is called after the init 
@@ -134,11 +134,9 @@ public class Main extends Application {
 		
 	}
 
-	/**
-	 * Method calls QuestionBox to ask user for a website to parse as well as
-	 * where the parsing should start and end.
-	 * @return a String array with responses to pass to WebScrape.parseSite() Method.
-	 */
+	/** Method calls QuestionBox to ask user for a website to parse as well as
+	 *  where the parsing should start and end.
+	 *  @return a String array with responses to pass to WebScrape.parseSite() Method. */
 	private String[] processUserInput() {
 		// Create string array to hold QuestionBox responses (site, startPoint, endPoint).
 		String[] responses = new String[3];
@@ -149,9 +147,8 @@ public class Main extends Application {
 		
 	}
 	
-	/**
-	 * Method to convert print database contents to topTen and All windows on JavaFX GUI.
-	 * @param rs is the ResultSet returned from Database.getResults() method. */
+	/** Method to convert printed database contents to topTen and All windows on JavaFX GUI.
+	 *  @param rs is the ResultSet returned from Database.getResults() method. */
 	private void displayResults(ResultSet rs) {
 		try {
 			// Build a string of top 10 results to push to Main.fxml GUI
@@ -185,6 +182,7 @@ public class Main extends Application {
 				wordCount++;
 				
 			}
+			
 			// Save results to String variables which are called from either:
 			// MainC-, MainDefaultC-, AllResultsC- or AllResultsDefaultC- ontrollers to push to GUI
 			sbTenString = sbTen.toString();
@@ -198,13 +196,12 @@ public class Main extends Application {
 		
 	}
 	
-	/**
-	 * Method to create a string for each word/frequency set in database that uses \t to account for word size 
-	 * as well as places a space before the numbers 1-9 in order to make top10 results more uniform.
-	 * @param word is the word pulled from the database.
-	 * @param frequency is the number of times the word occurred on the parsed site.
-	 * @param count keeps track of the position in the list (which is in descending order by frequency). 
-	 * @return String to append to StringBuilder for top10 and/or all results which is pushed to GUI. */
+	/** Method to create a string for each word/frequency set in database which uses \t to account for word size 
+	 *  and places a blank space before the numbers 1-9 in order to make top10 results more uniform.
+	 *  @param word is the word pulled from the database.
+	 *  @param frequency is the number of times the word occurred on the parsed site.
+	 *  @param count keeps track of the position in the list (which is in descending order by frequency). 
+	 *  @return String to append to StringBuilder for top10 and/or all results which is pushed to GUI. */
 	private String buildString(String word, int frequency, int count) {
 		
 		int size = word.length();
@@ -236,9 +233,9 @@ public class Main extends Application {
 		
 	}
 		
-	/** Method uses ConfirmBox class to confirm if user wants to quit. */
+	/** closeProgram() Method uses ConfirmBox class to confirm is user wants to quit */
 	protected static void closeProgram() {
-       // Ask if user wants to exit
+       // Ask if user wants to exit (no title necessary, leave blank)
        Boolean answer = ConfirmBox.display("", "Are you sure you want to quit?");
        if (answer) {
            // Run any necessary code before window closes:

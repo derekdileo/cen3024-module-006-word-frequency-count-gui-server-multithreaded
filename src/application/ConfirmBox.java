@@ -11,7 +11,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-/** ConfirmBox class utilizes an internal display method to confirm a user action
+/** ConfirmBox class utilizes an internal display method to inform user of something and 
+ *  collect their response.
  * @author Derek DiLeo*/
 public class ConfirmBox {
 
@@ -22,8 +23,7 @@ public class ConfirmBox {
      * @param title title of the pop-up window to be displayed
      * @param message message displayed in the pop-up window via Label class
      * @return boolean value (yes or no)
-     * @author Derek DiLeo
-     */
+     * @author Derek DiLeo */
     public static boolean display(String title, String message) {
         Stage window = new Stage(); // window is easier to grasp than 'stage'
 
@@ -56,12 +56,10 @@ public class ConfirmBox {
             window.close();
         });
         
-
         noButton.setOnAction(e -> {
             answer = false;
             window.close();
         });
-        
         
         // Allow yesButton and noButton to be fired by Enter Key
         yesButton.setOnKeyPressed(e -> {
@@ -89,4 +87,5 @@ public class ConfirmBox {
         window.showAndWait();
         return answer;
     }
+    
 }

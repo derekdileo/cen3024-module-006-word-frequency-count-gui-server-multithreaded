@@ -4,22 +4,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
 
-/**
- * A Class that will scrape text from given URL, add to a HashMap(of String, Integer) with all word entries and, 
- * finally, add each key/value pair to an ArrayList(of Word (Word implements Comparable(of Word))) 
- * so the ArrayList can be sorted by number of occurrences.
- * @author derekdileo */
+/** A Class that will scrape text from given URL, strip HTML tags, split and add all words to a String array, and
+ *  finally, add each word to a database with frequency of 1 (if already in db, frequency is incremented). 
+ *  @author derekdileo */
 public class WebScrape {
 	
-	/**
-	 * A Method for scrubbing text from a user-requested URL which removes HTML tags from each line, 
-	 * splits each line into individual words, adds all to a String array and, finally, returns the array.   
-	 * @param website is the URL that the user wants to process
-	 * @param sourceHead is the first line of text to be processed by the application
-	 * @param sourceEnd is the last line of text to be processed by the application
-	 * @throws IOException
-	 * @return String[] which contains every word on the requested site
-	 * @author Derek DiLeo */
+	/** A Method for scrubbing text from a user-requested URL which removes HTML tags from each line, 
+	 *  splits each line into individual words, adds all to a String array and, finally, returns the array for later processing.   
+	 *  @param website is the URL that the user wants to process
+	 *  @param sourceHead is the first line of text to be processed by the application
+	 *  @param sourceEnd is the last line of text to be processed by the application
+	 *  @throws IOException
+	 *  @return String[] which contains every word on the requested site
+	 *  @author Derek DiLeo */
 	public static String[] parseSite(String website, String sourceHead, String sourceEnd) {
 		try {
 		// Instantiate the URL class
@@ -80,10 +77,9 @@ public class WebScrape {
 		return null;
 	}
 	
-	/**
-	 * Use string array from parseSite() to push words to database. 
-	 * @param words is a string array created by parseSite() method which 
-	 * contains every word (and its multiples) that was parsed. */
+	/** A Method which uses String array from parseSite() to push words to database. 
+	 *  @param words is a string array created by parseSite() method which 
+	 *  contains every word (and its multiples) that was parsed. */
 	public static void wordsToDB(String[] words) {
 		try {
 			for (String word : words) {
