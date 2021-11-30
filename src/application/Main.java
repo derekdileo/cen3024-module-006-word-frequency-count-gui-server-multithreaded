@@ -85,10 +85,10 @@ public class Main extends Application {
 		launch();
 	}
 	
-	// Declare Stage, TextArea, ServerSocket & Socket outside of
+	// Declare Stage, TextArea outside of
 	// start() Method so they are accessible to closeProgram() method
 	private static Stage window;
-	private static TextArea ta;
+//	private static TextArea ta;
 //	private static ServerSocket serverSocket = null;
 //	private static Socket socket = null;
 	
@@ -102,14 +102,16 @@ public class Main extends Application {
 		window = primaryStage;
 		
 		// Text area for displaying contents
-		ta = new TextArea();
+		TextArea ta = new TextArea();
 		
 		// Create a scene and place it in the stage
 		Scene scene = new Scene(new ScrollPane(ta), 450, 200);
 		
-		// Set stage title
+		// Set stage title + scene
 		window.setTitle("Word Frequency Analyzer Server");
 		window.setScene(scene);
+		
+		// Show GUI
 		window.show();
 		
 		// Handle close button request. 
@@ -161,8 +163,8 @@ public class Main extends Application {
 						
 						ta.appendText("\n " + i + ": " + response);
 						
-						 if(userResponses[i].equals("quit")) {
-							 ta.appendText("\nuserResponses == quit");
+						 if(userResponses[i].equals("quit...")) {
+							 ta.appendText("\nuserResponses == quit...");
 							 break;
 						 }
 						 
@@ -185,14 +187,14 @@ public class Main extends Application {
 				 displayResults(results);
 				 
 				 // Send back to client
-				 ta.appendText(sbTenString);
-				 ta.appendText("\n");
-				 ta.appendText(sbAllString);
+//				 ta.appendText(sbTenString);
+//				 ta.appendText("\n");
+//				 ta.appendText(sbAllString);
 				 output.println(sbTenString);
-				 output.println("pause");
+				 output.println("pause...");
 				 output.println(sbAllString);
-				 output.println("pause");
-				 output.println("quit");
+				 output.println("pause...");
+				 output.println("quit...");
 				 
 			} catch(IOException ex) {
 				ta.appendText("Error in Server start(): " + ex.getMessage());
