@@ -16,8 +16,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
-/** Application scrapes text from a website and displays top10 
- *  (and all) word occurrences to a JavaFX GUI.
+/** Server side of an application which scrapes text from a user-selected 
+ *  website and displays top10 (and all) word occurrences to a Client-side JavaFX GUI.
  *  @author derekdileo */
 public class Main extends Application {
 	
@@ -102,11 +102,11 @@ public class Main extends Application {
 				});
 
 				// Wrap input stream with a buffered reader
-				BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				BufferedReader fromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				
 				// Wrap output stream with a print writer
 				// true = auto-flush output stream to ensure data is sent
-				PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
+				PrintWriter toClient = new PrintWriter(socket.getOutputStream(), true);
 				
 				// Create String array to hold user input
 				userResponses = new String[4];
@@ -118,7 +118,7 @@ public class Main extends Application {
 					for(int i = 0; i < 5; i++) {
 						
 						// Read and store each response line sent by Client
-						String response = input.readLine();
+						String response = fromClient.readLine();
 
 						userResponses[i] = response; 
 						
@@ -151,12 +151,12 @@ public class Main extends Application {
 				displayResults(results);
 				 
 				// Send top ten results back to client
-				output.println(sbTenString);
-				output.println("pause...");
+				toClient.println(sbTenString);
+				toClient.println("pause...");
 
 				// Send all results back to client
-				output.println(sbAllString);
-				output.println("pause...");
+				toClient.println(sbAllString);
+				toClient.println("pause...");
 				 
 			} catch(IOException ex) {
 				ta.appendText("Error in Server start(): " + ex.getMessage());
