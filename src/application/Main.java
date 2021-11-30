@@ -1,10 +1,6 @@
 package application;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -25,32 +21,7 @@ import javafx.stage.Stage;
  *  @author derekdileo */
 public class Main extends Application {
 	
-	// Variables for call to QuestionBox.display()
-	protected static boolean defaultSite = false;
-	protected static String userWebsite = null;
-	protected static String sourceHead = null;
-	protected static String sourceEnd = null;
-	private String defaultWebsite =  "https://www.gutenberg.org/files/1065/1065-h/1065-h.htm";
-	private String defaultSourceHead = "<h1>The Raven</h1>";
-	private String defaultSourceEnd = "<!--end chapter-->";
-	private String title = "Word Frequency Analyzer";
-	private String instruction = "Enter a URL to count frequency of each word.";
-	private String siteLabel = "Website to Parse";
-	private String sitePlaceholder = "Enter a website to evaluate";
-	private String startLabel = "Where to start.";
-	private String startPlaceholder= "Text from first line";
-	private String endLabel = "Where to finish.";
-	private String endPlaceholder = "Text from last line.";
-	private String[] defaultEntries = {defaultWebsite, defaultSourceHead, defaultSourceEnd};
-	private String[] questionBoxPrompts = {title, instruction, siteLabel, sitePlaceholder, startLabel, startPlaceholder, endLabel, endPlaceholder};
-	
-	// QuestionBox.display now accepts a third string array to pass to an AlertBox when it launches.
-	// This enables us to provide some app instructions to the user. 
-	private String appIntroTitle = "Welcome to Word Frequency Counter";
-	private String appIntroMessage = "For best results, right-click and inspect the text you'd like to parse. \nThen, copy and paste the elements into the start and finish boxes.";
-	private String[] appIntro = {appIntroTitle, appIntroMessage};
-	
-	// String array to hold QuestionBox.display() responses.
+	// String array to hold QuestionBox.display() responses from Client.
 	protected static String[] userResponses;
 	
 	// Local Lists and Maps to hold return values from Class methods
@@ -64,13 +35,6 @@ public class Main extends Application {
 	protected static String sbTenString;
 	protected static String sbAllString;
 	
-	// IO Streams for communication to / from Server
-	DataOutputStream toServer = null;
-	DataInputStream fromServer = null;
-	ByteArrayOutputStream baos = null;
-	ByteArrayInputStream bais = null;
-	
-		
 	/** Main method calls launch() to start JavaFX GUI.
 	 *  @param args mandatory parameters for command line method call */
 	public static void main(String[] args) {
@@ -85,12 +49,8 @@ public class Main extends Application {
 		launch();
 	}
 	
-	// Declare Stage, TextArea outside of
-	// start() Method so they are accessible to closeProgram() method
+	// Declare Stage outside of start() Method so it is accessible to closeProgram() method
 	private static Stage window;
-//	private static TextArea ta;
-//	private static ServerSocket serverSocket = null;
-//	private static Socket socket = null;
 	
 	/** The start method (which is called on the JavaFX Application Thread) 
 	 * is the entry point for this application and is called after the init 
@@ -101,13 +61,13 @@ public class Main extends Application {
 		// Rename stage to window for sanity
 		window = primaryStage;
 		
-		// Text area for displaying contents
+		// Text area for displaying Server contents
 		TextArea ta = new TextArea();
 		
 		// Create a scene and place it in the stage
 		Scene scene = new Scene(new ScrollPane(ta), 450, 200);
 		
-		// Set stage title + scene
+		// Set stage (window) title & scene
 		window.setTitle("Word Frequency Analyzer Server");
 		window.setScene(scene);
 		
@@ -146,7 +106,7 @@ public class Main extends Application {
 				
 				// Wrap output stream with a print writer
 				// true = auto-flush output stream to ensure data is sent
-				PrintWriter output = new PrintWriter(socket.getOutputStream(), true); // true = auto flush output stream
+				PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
 				
 				// Create String array to hold user input
 				userResponses = new String[4];
@@ -157,18 +117,22 @@ public class Main extends Application {
 					
 					for(int i = 0; i < 5; i++) {
 						
+						// Read and store each response line sent by Client
 						String response = input.readLine();
 
 						userResponses[i] = response; 
 						
+						// Display inputs to Server text area for troubleshooting purposes
 						ta.appendText("\n " + i + ": " + response);
 						
-						 if(userResponses[i].equals("quit...")) {
+						// Fourth response should terminate the infinte loop
+						if(userResponses[i].equals("quit...")) {
 							 ta.appendText("\nuserResponses == quit...");
 							 break;
-						 }
+						}
 						 
 					}
+					
 					break;
 				}
 				
@@ -177,24 +141,22 @@ public class Main extends Application {
 				wordsArray = WebScrape.parseSite(userResponses[0], userResponses[1], userResponses[2]);
 				
 				// Process wordsArray and push to database. 
-				// If word exists, increment its frequency
+				// If word exists in DB, increment its frequency
 				WebScrape.wordsToDB(wordsArray);
 				
 				// SELECT * FROM words ORDER BY DESC and return ResultSet
 				ResultSet results = Database.getResults();
 				
 				// Use StringBuilder to Convert ResultSet into sbTen and sbAll Strings
-				 displayResults(results);
+				displayResults(results);
 				 
-				 // Send back to client
-//				 ta.appendText(sbTenString);
-//				 ta.appendText("\n");
-//				 ta.appendText(sbAllString);
-				 output.println(sbTenString);
-				 output.println("pause...");
-				 output.println(sbAllString);
-				 output.println("pause...");
-				 output.println("quit...");
+				// Send top ten results back to client
+				output.println(sbTenString);
+				output.println("pause...");
+
+				// Send all results back to client
+				output.println(sbAllString);
+				output.println("pause...");
 				 
 			} catch(IOException ex) {
 				ta.appendText("Error in Server start(): " + ex.getMessage());
@@ -203,7 +165,6 @@ public class Main extends Application {
 		}).start();
 		
 	}
-
 	
 	/** Method to convert printed database contents to topTen and All windows on JavaFX GUI.
 	 *  @param rs is the ResultSet returned from Database.getResults() method. */
