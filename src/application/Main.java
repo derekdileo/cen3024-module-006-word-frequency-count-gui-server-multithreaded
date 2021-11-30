@@ -1,11 +1,23 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.ResultSet;
+import java.util.Date;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 /** Application scrapes text from a website and displays top10 
@@ -52,6 +64,13 @@ public class Main extends Application {
 	protected static String sbTenString;
 	protected static String sbAllString;
 	
+	// IO Streams for communication to / from Server
+	DataOutputStream toServer = null;
+	DataInputStream fromServer = null;
+	ByteArrayOutputStream baos = null;
+	ByteArrayInputStream bais = null;
+	
+		
 	/** Main method calls launch() to start JavaFX GUI.
 	 *  @param args mandatory parameters for command line method call */
 	public static void main(String[] args) {
@@ -66,9 +85,12 @@ public class Main extends Application {
 		launch();
 	}
 	
-	// Declare stage (window) outside of start() method
-	// so it is accessible to closeProgram() method
-	protected static Stage window;
+	// Declare Stage, TextArea, ServerSocket & Socket outside of
+	// start() Method so they are accessible to closeProgram() method
+	private static Stage window;
+	private static TextArea ta;
+//	private static ServerSocket serverSocket = null;
+//	private static Socket socket = null;
 	
 	/** The start method (which is called on the JavaFX Application Thread) 
 	 * is the entry point for this application and is called after the init 
@@ -76,35 +98,19 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		
-		// Get user input for website, startLine & endLine...
-		// Or set to default values if none are entered by user
-		userResponses = processUserInput();
-		
-		// This boolean is used to determine which scene is loaded 
-		// (with or without EAP's The Raven graphic elements) 
-		if (userResponses[0].equals(defaultWebsite)) {
-			defaultSite = true;
-		}
-		
-		// String array created by WebScrape.parseSite() 
-		// which contains every word (and multiples)
-		wordsArray = WebScrape.parseSite(userResponses[0], userResponses[1], userResponses[2]);
-		
-		// Process wordsArray and push to database. 
-		// If word exists, increment its frequency
-		WebScrape.wordsToDB(wordsArray);
-		
-		// SELECT * FROM words ORDER BY DESC and return ResultSet
-		ResultSet results = Database.getResults();
-		
-		// Push results to GUI
-		displayResults(results);
-		
 		// Rename stage to window for sanity
 		window = primaryStage;
 		
+		// Text area for displaying contents
+		ta = new TextArea();
+		
+		// Create a scene and place it in the stage
+		Scene scene = new Scene(new ScrollPane(ta), 450, 200);
+		
 		// Set stage title
-		window.setTitle("Word Frequency Analyzer");
+		window.setTitle("Word Frequency Analyzer Server");
+		window.setScene(scene);
+		window.show();
 		
 		// Handle close button request. 
 		// Launch ConfirmBox to confirm if user wishes to quit
@@ -114,38 +120,88 @@ public class Main extends Application {
 			closeProgram();
 		});
 		
-		try {
-			if (defaultSite) {
-				BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Main.fxml"));				
-				Scene scene = new Scene(root,800,600);
-				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-				window.setScene(scene);
-				window.show();
-			} else {
-				BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("MainDefault.fxml"));				
-				Scene scene = new Scene(root,800,600);
-				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-				window.setScene(scene);
-				window.show();
+		// Create and start an anonymous Thread to handle input from Client
+		new Thread( () -> {
+			
+			// Create ServerSocket
+			try (ServerSocket serverSocket = new ServerSocket(8000)){
+				
+				// Print start time to server TextArea
+				Platform.runLater(() -> {
+					ta.appendText("Server started at " + new Date() + '\n');
+				});
+
+				// Accept connection request from Client
+				Socket socket = serverSocket.accept();
+				
+				// Print start time to server TextArea
+				Platform.runLater(() -> {
+					ta.appendText("Client Connected" + '\n');
+				});
+
+				// Wrap input stream with a buffered reader
+				BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				
+				// Wrap output stream with a print writer
+				// true = auto-flush output stream to ensure data is sent
+				PrintWriter output = new PrintWriter(socket.getOutputStream(), true); // true = auto flush output stream
+				
+				// Create String array to hold user input
+				userResponses = new String[4];
+				
+				// Infinite loop to collect input from user
+				// Not necessary here, but useful when in enclosing loop is unknown
+				while(true) {
+					
+					for(int i = 0; i < 5; i++) {
+						
+						String response = input.readLine();
+
+						userResponses[i] = response; 
+						
+						ta.appendText("\n " + i + ": " + response);
+						
+						 if(userResponses[i].equals("quit")) {
+							 ta.appendText("\nuserResponses == quit");
+							 break;
+						 }
+						 
+					}
+					break;
+				}
+				
+				// String array created by WebScrape.parseSite() 
+				// which contains every word (and multiples)
+				wordsArray = WebScrape.parseSite(userResponses[0], userResponses[1], userResponses[2]);
+				
+				// Process wordsArray and push to database. 
+				// If word exists, increment its frequency
+				WebScrape.wordsToDB(wordsArray);
+				
+				// SELECT * FROM words ORDER BY DESC and return ResultSet
+				ResultSet results = Database.getResults();
+				
+				// Use StringBuilder to Convert ResultSet into sbTen and sbAll Strings
+				 displayResults(results);
+				 
+				 // Send back to client
+				 ta.appendText(sbTenString);
+				 ta.appendText("\n");
+				 ta.appendText(sbAllString);
+				 output.println(sbTenString);
+				 output.println("pause");
+				 output.println(sbAllString);
+				 output.println("pause");
+				 output.println("quit");
+				 
+			} catch(IOException ex) {
+				ta.appendText("Error in Server start(): " + ex.getMessage());
 			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+			
+		}).start();
 		
 	}
 
-	/** Method calls QuestionBox to ask user for a website to parse as well as
-	 *  where the parsing should start and end.
-	 *  @return a String array with responses to pass to WebScrape.parseSite() Method. */
-	private String[] processUserInput() {
-		// Create string array to hold QuestionBox responses (site, startPoint, endPoint).
-		String[] responses = new String[3];
-		
-		// Gather responses and return to caller
-		responses = QuestionBox.display(questionBoxPrompts, defaultEntries, appIntro);
-		return responses;
-		
-	}
 	
 	/** Method to convert printed database contents to topTen and All windows on JavaFX GUI.
 	 *  @param rs is the ResultSet returned from Database.getResults() method. */
@@ -153,11 +209,13 @@ public class Main extends Application {
 		try {
 			// Build a string of top 10 results to push to Main.fxml GUI
 			sbTen = new StringBuilder();
-			sbTen.append("Top Ten Results\n\n");
+			sbTen.append("\nTop Ten Results\n\n");
+			sbTen.append(",");
 			
 			// Build a string of all results to push to AllResults.fxml GUI
 			sbAll = new StringBuilder();
-			sbAll.append("All Results\n\n");
+			sbAll.append("\nAll Results\n\n");
+			sbAll.append(",");
 			
 			// Variables for buildString()
 			String word = null;
@@ -174,9 +232,12 @@ public class Main extends Application {
 				// Handle top10 and all results lists
 				if (wordCount < 10) {
 					sbTen.append(line);
+					sbTen.append(",");
 					sbAll.append(line);
+					sbAll.append(",");
 				} else {
 					sbAll.append(line);
+					sbAll.append(",");
 				}
 				
 				wordCount++;
