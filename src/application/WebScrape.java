@@ -80,7 +80,7 @@ public class WebScrape {
 	/** A Method which uses String array from parseSite() to push words to database. 
 	 *  @param words is a string array created by parseSite() method which 
 	 *  contains every word (and its multiples) that was parsed. */
-	public static void wordsToDB(String[] words) {
+	public static void wordsToDB(String[] words, char tableId) {
 		try {
 			for (String word : words) {
 				// Do not allow white blank white space or "mdash"
@@ -88,15 +88,15 @@ public class WebScrape {
 						&& !word.toString().contains("	")) {
 					
 					// Check if word exists in db (-1 if not)
-					int frequency = Database.queryFrequency(word);
+					int frequency = Database.queryFrequency(word, tableId);
 					
 					// If word already in database...
 					if (frequency != -1) {
 						// Increment the frequency
-						Database.update(word, ++frequency);
+						Database.update(word, ++frequency, tableId);
 					} else {
 						// Add to database
-						Database.post(word, 1);
+						Database.post(word, 1, tableId);
 					}
 					
 				}
