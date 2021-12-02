@@ -62,7 +62,7 @@ public class Database {
 	 *  @param tableName is the desired name for database table to be created and is only used for testing purposes- 
 	 *  otherwise, this would be hard-coded.
 	 *  @throws Exception */
-	public static void createTable(char tableId) throws Exception {
+	public synchronized static void createTable(char tableId) throws Exception {
 		try {
 			// Establish a connection
 			conn = getConnection();
@@ -110,7 +110,7 @@ public class Database {
 	/** Method drops a table within the database (if it exists).
 	 *  @param tableName is the name of the table to be deleted.
 	 *  @throws Exception */
-	public static void deleteTable(char tableId) throws Exception {
+	public synchronized static void deleteTable(char tableId) throws Exception {
 		try {
 			// Establish a connection
 			conn = getConnection();
@@ -153,7 +153,7 @@ public class Database {
 	 *  @param word is the desired word to be posted to the words table
 	 *  @param frequency is the frequency of occurrence of the word in our program 
 	 *  @throws Exception */
-	public static void post(String word, int frequency, char tableId) throws Exception {
+	public synchronized static void post(String word, int frequency, char tableId) throws Exception {
 		try {
 			conn = getConnection();
 			String post = "INSERT INTO  " + tableId + "  (word, frequency) VALUES ('" + word +"', '" + frequency + "')";
@@ -187,7 +187,7 @@ public class Database {
 	/** Method deletes desired word and frequency values from the words table
 	 *  @param word is the desired word to be removed from the words table
 	 *  @throws Exception */
-	public static void delete(String word, char tableId) throws Exception {
+	public synchronized static void delete(String word, char tableId) throws Exception {
 		try {
 			conn = getConnection();
 			String post = "DELETE FROM " + tableId + " WHERE word = '" + word + "'";
@@ -223,7 +223,7 @@ public class Database {
 	 *  @param word is the target key whose frequency is to be updated
 	 *  @param frequency is the new frequency of occurrence of the word in our program 
 	 *  @throws Exception */
-	public static void update(String word, int frequency, char tableId) {
+	public synchronized static void update(String word, int frequency, char tableId) {
 		try {
 			conn = getConnection();
 			String update = "UPDATE " + tableId + " SET frequency = " + frequency + " WHERE word  = '" + word + "'";
@@ -268,7 +268,7 @@ public class Database {
 	 *  otherwise, frequency is set to -1. 
 	 *  @param word is the word to search for in the database.
 	 *  @return frequency of the word (or -1 if word not present in db) */
-	public static int queryFrequency(String word, char tableId) {
+	public synchronized static int queryFrequency(String word, char tableId) {
 		try {
 			conn = getConnection();
 			String query = "SELECT frequency FROM " + tableId + " WHERE word = '" + word + "'";
@@ -313,7 +313,7 @@ public class Database {
 	
 	/** Method that queries database for * FROM words, orders by frequency DESC and returns a ResultSet. 
 	 *  @return ResultSet of query SELECT * FROM words ORDER BY frequency DESC */
-	public static ResultSet getResults(char tableId) {
+	public synchronized static ResultSet getResults(char tableId) {
 		try {
 			conn = getConnection();
 			String query = "SELECT * FROM " + tableId + " ORDER BY frequency DESC";

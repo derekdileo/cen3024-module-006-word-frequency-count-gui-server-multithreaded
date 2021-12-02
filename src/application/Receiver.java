@@ -60,7 +60,7 @@ public class Receiver extends Thread {
 			PrintWriter toClient = new PrintWriter(socket.getOutputStream(), true);
 			
 			// Print start time to server TextArea
-			Main.ta.appendText("Client " + tableId + " Connected at " + new Date() + '\n');
+			Main.ta.appendText("\nClient " + tableId + " Connected at " + new Date() + '\n');
 			
 			// Create table for THIS Client connection
 			try {
@@ -92,7 +92,7 @@ public class Receiver extends Thread {
 					
 					// Fourth response should terminate the infinte loop
 					if(userResponses[i].equals("quit...")) {
-						 Main.ta.appendText("\nuserResponses == quit...");
+						 Main.ta.appendText("\nuserResponses[" + i + "] == quit...");
 						 break;
 					}
 					 
@@ -122,17 +122,33 @@ public class Receiver extends Thread {
 			// Send all results back to client
 			toClient.println(sbAllString);
 			toClient.println("pause...");
+
+			//String str = fromClient.readLine();
 			
-			// Drop table associated with Client connection
-			try {
-				Database.deleteTable(this.tableId);
-			} catch (Exception e) {
-				Main.ta.appendText("Error deleting client-specific table: " + this.tableId + "..." + e.getMessage());
-				e.printStackTrace();
+			// Wait for Client to close window (which sends "exit...")
+			while(true) {
+			
+				String str1 = fromClient.readLine();
+				
+				if(str1.equals("exit...")) {
+					Main.ta.appendText("\nClient with table: " + this.tableId + " exiting");
+					
+					// Drop table associated with Client connection
+					try {
+						Database.deleteTable(this.tableId);
+					} catch (Exception e) {
+						Main.ta.appendText("\nError deleting client-specific table: " + this.tableId + "..." + e.getMessage());
+						e.printStackTrace();
+					}
+					break;
+				}
+				
+				//Main.ta.appendText("\nHere: ");
 			}
 			
+			
 		} catch(IOException e) {
-			System.out.println("Exception in Receiver " + e.getMessage());
+			Main.ta.appendText("Exception in Receiver " + e.getMessage());
 			e.printStackTrace();
 			
 		} finally {
@@ -140,7 +156,7 @@ public class Receiver extends Thread {
 			try {
 				socket.close();
 			} catch(IOException e) {
-				System.out.println("Exception in Receiver (finally block) " + e.getMessage());
+				Main.ta.appendText("Exception in Receiver (finally block) " + e.getMessage());
 				
 			}
 			
