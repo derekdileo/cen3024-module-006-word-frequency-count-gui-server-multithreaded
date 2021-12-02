@@ -123,29 +123,29 @@ public class Receiver extends Thread {
 			toClient.println(sbAllString);
 			toClient.println("pause...");
 
-			//String str = fromClient.readLine();
-			
-			// Wait for Client to close window (which sends "exit...")
+			// Wait for Client to finish printing to GUI and drop db table
 			while(true) {
 			
+				// wait for 'exit...' from Client
 				String str1 = fromClient.readLine();
 				
 				if(str1.equals("exit...")) {
+					// Notify Server side that client is finished
 					Main.ta.appendText("\nClient with table: " + this.tableId + " exiting");
 					
 					// Drop table associated with Client connection
 					try {
 						Database.deleteTable(this.tableId);
+						Main.ta.appendText("\nDeleting table: " + this.tableId);
 					} catch (Exception e) {
 						Main.ta.appendText("\nError deleting client-specific table: " + this.tableId + "..." + e.getMessage());
 						e.printStackTrace();
 					}
+					
 					break;
 				}
 				
-				//Main.ta.appendText("\nHere: ");
 			}
-			
 			
 		} catch(IOException e) {
 			Main.ta.appendText("Exception in Receiver " + e.getMessage());
